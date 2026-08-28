@@ -1126,25 +1126,23 @@ footer.site::after{
 .gate-box label.gate-main input:focus{border-color:var(--p-sky-ink)}
 .gate-note{font-size:.78rem;color:var(--ink-soft);background:var(--p-slate-2);
   border-radius:10px;padding:.6rem .8rem;margin:.3rem 0 .8rem}
-.gate-adv{
-  border:1px solid var(--p-slate);border-radius:12px;
-  background:var(--p-slate-2);margin-bottom:.9rem;overflow:hidden;
+/* key generator page */
+.kg-form{display:grid;gap:.9rem;max-width:34rem}
+.kg-form label{font-size:.88rem;font-weight:700;color:var(--p-slate-ink)}
+.kg-form input{
+  width:100%;margin-top:.3rem;font-family:inherit;font-size:.98rem;
+  padding:.62rem .85rem;border-radius:12px;border:1px solid var(--p-slate);
+  background:#fff;color:var(--ink);transition:border-color .16s,box-shadow .16s;
 }
-.gate-adv summary{
-  cursor:pointer;list-style:none;padding:.6rem .85rem;
-  font-size:.83rem;font-weight:700;color:var(--p-slate-ink);
-  display:flex;align-items:center;gap:.35rem;
+.kg-form input:focus{outline:none;border-color:var(--p-sky-ink);box-shadow:0 0 0 3px var(--p-sky-2)}
+#kgTok{direction:ltr;text-align:left}
+.kg-form .big-cta{justify-self:start}
+.kg-msg{font-size:.9rem;font-weight:700;color:var(--p-slate-ink);min-height:1.3rem}
+.kg-out{
+  width:100%;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;
+  direction:ltr;text-align:left;padding:.9rem 1rem;border-radius:12px;
+  border:1px solid var(--p-slate);background:#0F2438;color:#CFE4F4;resize:vertical;
 }
-.gate-adv summary::-webkit-details-marker{display:none}
-.gate-adv summary::after{content:"▾";margin-inline-start:auto;transition:transform .2s}
-.gate-adv[open] summary::after{transform:rotate(180deg)}
-.gate-adv summary:hover{color:var(--navy)}
-.gate-adv > *:not(summary){padding-inline:.85rem}
-.gate-adv > label:last-of-type{padding-bottom:.85rem}
-.gate-adv label{font-size:.78rem}
-.gate-adv input{font-size:.88rem;padding:.45rem .7rem}
-.adv-note{font-size:.75rem;color:var(--ink-soft);margin-bottom:.6rem}
-.adv-note code{background:#fff;border-radius:5px;padding:.05rem .3rem;font-size:.95em}
 .gate-out{font-size:.86rem;font-weight:700;color:var(--p-slate-ink);min-height:1.3rem;margin-bottom:.6rem}
 .gate-actions{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
 .gate-ghost{
@@ -1369,17 +1367,10 @@ footer.site::after{
     <h3 id="gateTitle">🔐 כניסת צוות</h3>
     <p class="gate-lead">הכניסה נדרשת רק כדי <strong>להוסיף או למחוק</strong> חומרים.
     כל מי שנכנס לאתר רואה, פותח ומוריד את החומרים בלי שום סיסמה.</p>
-    <label class="gate-main">מפתח גישה
-      <input id="gToken" type="password" placeholder="הדביקו כאן את מפתח הגישה" autocomplete="off">
+    <label class="gate-main">סיסמה
+      <input id="gToken" type="password" placeholder="הזינו את סיסמת הצוות" autocomplete="current-password">
     </label>
-    <p class="gate-note">המפתח נשמר רק בדפדפן של המחשב הזה, וההתחברות נשמרת גם אחרי סגירה.</p>
-    <details class="gate-adv" id="gSetup">
-      <summary>⚙ הגדרות מאגר · <span id="gRepoLbl">—</span></summary>
-      <p class="adv-note">נדרש פעם אחת בלבד להקמת האתר. אפשר גם למלא מראש בקובץ <code>index.html</code> בשורת <code>SITE_REPO</code>.</p>
-      <label>שם המשתמש ב-GitHub<input id="gOwner" type="text" placeholder="my-username" autocomplete="off"></label>
-      <label>שם המאגר (Repository)<input id="gName" type="text" placeholder="stem-site" autocomplete="off"></label>
-      <label>ענף (Branch)<input id="gBranch" type="text" value="main" autocomplete="off"></label>
-    </details>
+    <p class="gate-note">ההתחברות נשמרת במחשב הזה גם אחרי סגירת הדפדפן.</p>
     <div class="gate-out" id="gOut"></div>
     <div class="gate-actions">
       <button class="big-cta" type="button" id="gSave">שמירה והתחברות</button>
@@ -1788,32 +1779,52 @@ const BODY_POINTS = [
    Editor: unlocked with a GitHub token, publishes straight to the repo.
    =================================================================== */
 /* ═══════════════════════════════════════════════════════════════════
-   ⚙  הגדרת המאגר — למלא פעם אחת בלבד, ואז הצוות מזין רק מפתח גישה
+   ⚙  הגדרות האתר
    ═══════════════════════════════════════════════════════════════════ */
 const SITE_REPO = {
-  owner : '',        // שם המשתמש ב-GitHub, למשל 'maoz-k'
-  name  : '',        // שם המאגר, למשל 'stem-site'
+  owner : 'HemedEitan',
+  name  : 'stem-site',
   branch: 'main'
 };
+
+/* הכספת: מפתח ה-GitHub מוצפן בסיסמה (AES-256-GCM).
+   ליצירת הערך הזה פתחו את האתר עם הכתובת  ...index.html#/keygen
+   והדביקו כאן את השורה שתתקבל.                                      */
+const VAULT = '';
 /* ═══════════════════════════════════════════════════════════════════ */
 
 const CONTENT_DIR = 'content';
-const CFG_KEY = 'stemhub.repo';
+const TOK_KEY = 'stemhub.tok';
 
-function cfgRaw(){ try { return JSON.parse(localStorage.getItem(CFG_KEY) || 'null') || {}; } catch(e){ return {}; } }
-function cfgGet(){
-  const o = cfgRaw();
-  return {
-    owner : o.owner  || SITE_REPO.owner,
-    name  : o.name   || SITE_REPO.name,
-    branch: o.branch || SITE_REPO.branch || 'main',
-    token : o.token  || ''
-  };
+function tokenGet(){ try { return localStorage.getItem(TOK_KEY) || ''; } catch(e){ return ''; } }
+function tokenSet(t){ try { t ? localStorage.setItem(TOK_KEY, t) : localStorage.removeItem(TOK_KEY); } catch(e){} }
+function cfgGet(){ return {...SITE_REPO, token: tokenGet()}; }
+function cfgClear(){ tokenSet(''); }
+function repoReady(){ return !!(SITE_REPO.owner && SITE_REPO.name); }
+function isEditor(){ return !!(tokenGet() && repoReady()); }
+
+/* ---------- password vault (WebCrypto) ---------- */
+async function deriveKey(pw, salt){
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey(
+    {name:'PBKDF2', salt, iterations:250000, hash:'SHA-256'},
+    base, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']);
 }
-function cfgSet(c){ try { localStorage.setItem(CFG_KEY, JSON.stringify({...cfgRaw(), ...c})); } catch(e){} }
-function cfgClear(){ try { localStorage.removeItem(CFG_KEY); } catch(e){} }
-function repoReady(){ const c = cfgGet(); return !!(c.owner && c.name); }
-function isEditor(){ const c = cfgGet(); return !!(c.token && c.owner && c.name); }
+async function vaultLock(token, pw){
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv   = crypto.getRandomValues(new Uint8Array(12));
+  const key  = await deriveKey(pw, salt);
+  const ct   = new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, new TextEncoder().encode(token)));
+  const out  = new Uint8Array(16 + 12 + ct.length);
+  out.set(salt, 0); out.set(iv, 16); out.set(ct, 28);
+  return b64FromBuffer(out.buffer);
+}
+async function vaultUnlock(blob, pw){
+  const raw = Uint8Array.from(atob(blob), c=>c.charCodeAt(0));
+  const key = await deriveKey(pw, raw.slice(0,16));
+  const pt  = await crypto.subtle.decrypt({name:'AES-GCM', iv: raw.slice(16,28)}, key, raw.slice(28));
+  return new TextDecoder().decode(pt);
+}
 
 let MANIFEST = null, manifestLoaded = false, manifestOffline = false;
 
@@ -1944,22 +1955,11 @@ function closeViewer(){
    Editor gate
    =================================================================== */
 function editorDialog(){
-  const c = cfgGet();
   const wrap = document.getElementById('gate');
-  document.getElementById('gToken').value  = c.token  || '';
-  document.getElementById('gOwner').value  = c.owner  || '';
-  document.getElementById('gName').value   = c.name   || '';
-  document.getElementById('gBranch').value = c.branch || 'main';
-  const setup = document.getElementById('gSetup');
-  const out   = document.getElementById('gOut');
-  if (!repoReady()){
-    setup.open = true;
-    out.textContent = '⚠ המאגר טרם הוגדר — פתחו "הגדרות מאגר" והשלימו פעם אחת.';
-  } else {
-    setup.open = false;
-    out.textContent = isEditor() ? '✔ מצב עריכה פעיל במחשב הזה' : '';
-  }
-  document.getElementById('gRepoLbl').textContent = repoReady() ? `${c.owner}/${c.name}` : 'לא הוגדר';
+  const out  = document.getElementById('gOut');
+  document.getElementById('gToken').value = '';
+  out.textContent = !VAULT ? '⚠ טרם הוגדרה סיסמה לאתר — ראו את קובץ ההוראות.'
+                  : isEditor() ? '✔ מצב עריכה פעיל במחשב הזה' : '';
   wrap.hidden = false; requestAnimationFrame(()=>wrap.classList.add('open'));
   setTimeout(()=>document.getElementById('gToken').focus(), 260);
 }
@@ -1970,28 +1970,28 @@ function closeGate(){
 }
 async function gateSave(){
   const out = document.getElementById('gOut');
-  const token = document.getElementById('gToken').value.trim();
-  const adv = {
-    owner:  document.getElementById('gOwner').value.trim(),
-    name:   document.getElementById('gName').value.trim(),
-    branch: document.getElementById('gBranch').value.trim() || 'main'
-  };
-  if (adv.owner || adv.name) cfgSet(adv);
-  if (!token){ out.textContent = '⚠ יש להזין מפתח גישה.'; return; }
-  if (!repoReady()){
-    out.textContent = '⚠ המאגר טרם הוגדר — פתחו "הגדרות מאגר" והשלימו שם משתמש ושם מאגר.';
-    document.getElementById('gSetup').open = true; return;
+  const pw  = document.getElementById('gToken').value.trim();
+  if (!pw){ out.textContent = '⚠ יש להזין סיסמה.'; return; }
+  if (!VAULT){ out.textContent = '⚠ טרם הוגדרה סיסמה לאתר — ראו את קובץ ההוראות.'; return; }
+  if (!(window.crypto && crypto.subtle)){ out.textContent = '✖ הדפדפן אינו תומך בפענוח מאובטח.'; return; }
+  out.textContent = 'בודק סיסמה…';
+  let token;
+  try{
+    token = await vaultUnlock(VAULT, pw);
+  }catch(e){
+    out.textContent = '✖ סיסמה שגויה';
+    document.getElementById('gToken').select();
+    return;
   }
-  out.textContent = 'בודק מפתח…';
-  cfgSet({token});
+  tokenSet(token);
   try{
     await ghGet(`${CONTENT_DIR}/files.json`);
-    out.textContent = '✔ המפתח אומת — מצב עריכה פעיל.';
+    out.textContent = '✔ הסיסמה אומתה — מצב עריכה פעיל.';
     toast('מצב עריכה הופעל');
     setTimeout(()=>{ closeGate(); refreshEditorUI(); }, 700);
   }catch(e){
-    out.textContent = '✖ ' + (e.message || 'המפתח שגוי');
-    cfgSet({token:''});
+    tokenSet('');
+    out.textContent = '✖ ' + (e.message || 'ההתחברות נכשלה');
   }
 }
 function gateLogout(){ cfgClear(); toast('יצאת ממצב עריכה'); closeGate(); refreshEditorUI(); }
@@ -2558,6 +2558,75 @@ document.getElementById('modalClose').addEventListener('click', closeModal);
 backdrop.addEventListener('mousedown', e=>{ if (e.target === backdrop) closeModal(); });
 document.addEventListener('keydown', e=>{ if (e.key === 'Escape' && !backdrop.hidden) closeModal(); });
 
+/* ===================================================================
+   Key generator — #/keygen  (one-time, for the site owner)
+   =================================================================== */
+function renderKeygen(){
+  setCrumbs([{label:'דף הבית',href:'#/'},{label:'הגדרת סיסמת צוות'}]);
+  document.title = 'הגדרת סיסמת צוות';
+  app.innerHTML = `
+    <div class="page-head">
+      <div class="kicker">הגדרה חד-פעמית · למנהל האתר</div>
+      <h1>🔑 הגדרת סיסמת הצוות</h1>
+      <p>הכלי הזה מצפין את מפתח ה-GitHub שלכם בעזרת סיסמה שתבחרו.
+      אחרי ההגדרה, הצוות יזין <strong>רק את הסיסמה</strong> — המפתח עצמו לא מוצג לאיש ואינו ניתן לקריאה מקוד האתר בלי הסיסמה.</p>
+    </div>
+
+    <section class="block">
+      <h2><span class="bicon" aria-hidden="true">1️⃣</span> הזנת הפרטים</h2>
+      <div class="kg-form">
+        <label>מפתח GitHub (Token)
+          <input id="kgTok" type="password" placeholder="github_pat_…" autocomplete="off">
+        </label>
+        <label>הסיסמה שהצוות יזין
+          <input id="kgPw" type="text" placeholder="לדוגמה: חמד-איתן-2026" autocomplete="off">
+        </label>
+        <label>אימות סיסמה
+          <input id="kgPw2" type="text" placeholder="שוב אותה סיסמה" autocomplete="off">
+        </label>
+        <button class="big-cta" type="button" id="kgGo">🔒 יצירת השורה המוצפנת</button>
+        <div class="kg-msg" id="kgMsg"></div>
+      </div>
+    </section>
+
+    <section class="block" id="kgOutWrap" hidden>
+      <h2><span class="bicon" aria-hidden="true">2️⃣</span> העתקה לקובץ</h2>
+      <p style="color:var(--ink-soft);margin-bottom:.9rem">
+        פתחו את <code>index.html</code>, מצאו את השורה שמתחילה ב-<code>const VAULT</code> והחליפו אותה בשורה הבאה:
+      </p>
+      <textarea class="kg-out" id="kgOut" readonly rows="4"></textarea>
+      <button class="big-cta" type="button" id="kgCopy" style="margin-top:.9rem">📋 העתקה</button>
+      <div class="note warn" style="margin-top:1rem">
+        ⚠ שמרו את מפתח ה-GitHub המקורי במקום בטוח. אם תשכחו את הסיסמה — פשוט הריצו את הכלי הזה שוב עם סיסמה חדשה.
+      </div>
+    </section>`;
+
+  document.getElementById('kgGo').addEventListener('click', async ()=>{
+    const tok = document.getElementById('kgTok').value.trim();
+    const pw  = document.getElementById('kgPw').value.trim();
+    const pw2 = document.getElementById('kgPw2').value.trim();
+    const msg = document.getElementById('kgMsg');
+    if (!tok){ msg.textContent = '⚠ יש להדביק את מפתח ה-GitHub.'; return; }
+    if (pw.length < 6){ msg.textContent = '⚠ בחרו סיסמה באורך 6 תווים לפחות.'; return; }
+    if (pw !== pw2){ msg.textContent = '⚠ הסיסמאות אינן זהות.'; return; }
+    if (!(window.crypto && crypto.subtle)){ msg.textContent = '✖ הדפדפן אינו תומך בהצפנה.'; return; }
+    msg.textContent = 'מצפין…';
+    try{
+      const blob = await vaultLock(tok, pw);
+      document.getElementById('kgOut').value = `const VAULT = '${blob}';`;
+      document.getElementById('kgOutWrap').hidden = false;
+      msg.textContent = '✔ ההצפנה הושלמה — העתיקו את השורה למטה.';
+      document.getElementById('kgOutWrap').scrollIntoView({behavior:'smooth'});
+    }catch(e){ msg.textContent = '✖ ההצפנה נכשלה: ' + (e.message||''); }
+  });
+  document.getElementById('kgCopy').addEventListener('click', ()=>{
+    const t = document.getElementById('kgOut');
+    t.select();
+    navigator.clipboard ? navigator.clipboard.writeText(t.value).then(()=>toast('הועתק'))
+                        : (document.execCommand('copy'), toast('הועתק'));
+  });
+}
+
 /* ---------- router ---------- */
 function route(){
   const h = location.hash.replace(/^#/,'') || '/';
@@ -2573,6 +2642,8 @@ function route(){
     renderProgram(PROGRAMS[m[1]]);
   } else if (h === '/programs'){
     renderHome();
+  } else if (h === '/keygen'){
+    renderKeygen();
   } else {
     renderHub();
   }
