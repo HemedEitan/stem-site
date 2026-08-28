@@ -1,0 +1,2603 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מרחב בטוח ללמידה — פלטפורמה חינוכית</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Frank+Ruhl+Libre:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#122B45;
+  --navy-2:#1B3E63;
+  --blue:#2E6DA3;
+  --blue-light:#5B94C4;
+  --sky:#CFE4F4;
+  --pale:#F2F8FD;
+  --teal:#137A6C;
+  --teal-2:#1E9384;
+  --teal-soft:#D8F0EC;
+  --teal-pale:#F0FAF8;
+  --cream:#FAF6EE;
+  --cream-2:#F2EADA;
+  --accent:#DE7132;
+  --accent-2:#F08A4B;
+  --accent-dark:#C05A20;
+  --gold:#E9B44C;
+  --ink:#1E2B38;
+  --ink-soft:#54657A;
+  --white:#FFFFFF;
+  --radius:22px;
+  --radius-sm:14px;
+  --shadow:0 6px 24px rgba(18,43,69,.09);
+  --shadow-lg:0 18px 44px rgba(18,43,69,.16);
+  --ring:0 0 0 1px rgba(18,43,69,.05);
+  --fs:18px;
+
+  /* --- pastel system (STEM hub) --- */
+  --p-mint:#CFEDE4;   --p-mint-2:#E8F7F2;   --p-mint-ink:#1B7A66;
+  --p-sky:#D4E6F7;    --p-sky-2:#EAF3FC;    --p-sky-ink:#2A6598;
+  --p-lilac:#DFDCF3;  --p-lilac-2:#F0EEFB;  --p-lilac-ink:#5B54A8;
+  --p-peach:#FADFCB;  --p-peach-2:#FDF0E6;  --p-peach-ink:#B96A34;
+  --p-rose:#F7D9DE;   --p-rose-2:#FDEDF0;   --p-rose-ink:#B25566;
+  --p-sun:#F8E7BE;    --p-sun-2:#FDF6E5;    --p-sun-ink:#A5802A;
+  --p-slate:#DDE5EC;  --p-slate-2:#F0F4F8;  --p-slate-ink:#41586E;
+  --p-aqua:#CFE9EF;   --p-aqua-2:#EAF6F9;   --p-aqua-ink:#1E7A8C;
+  --p-sage:#DDEBD3;   --p-sage-2:#F1F8EC;   --p-sage-ink:#4E7A3C;
+  --radius-lg:28px;
+  --shadow-soft:0 8px 30px rgba(65,88,110,.10);
+  --shadow-hover:0 22px 48px rgba(65,88,110,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+/* must beat any author display rule — otherwise hidden overlays keep eating clicks */
+[hidden]{display:none !important}
+html{font-size:var(--fs);scroll-behavior:smooth}
+body{
+  font-family:'Heebo',-apple-system,'Segoe UI',Arial,sans-serif;
+  background:
+    radial-gradient(1100px 500px at 85% -80px, rgba(46,109,163,.10), transparent 60%),
+    radial-gradient(900px 420px at 8% 30px, rgba(233,180,76,.10), transparent 55%),
+    radial-gradient(800px 400px at 12% 85%, rgba(46,109,163,.07), transparent 60%),
+    radial-gradient(700px 380px at 92% 70%, rgba(233,180,76,.07), transparent 60%),
+    var(--cream);
+  color:var(--ink);
+  line-height:1.7;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+}
+a{color:var(--navy-2)}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+::selection{background:var(--sky)}
+
+h1,h2,h3,.logo{font-family:'Frank Ruhl Libre','Heebo',serif}
+.lesson-badge,.month-num,.pc-tag,.kicker,nav.crumbs,.a11y,.home-btn,.go,.dl,button{font-family:'Heebo',sans-serif}
+
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+main > *{animation:rise .45s ease both}
+main > *:nth-child(2){animation-delay:.07s}
+main > *:nth-child(3){animation-delay:.14s}
+main > *:nth-child(4){animation-delay:.2s}
+
+/* ---------- Header ---------- */
+header.site{
+  background:linear-gradient(120deg,var(--navy) 0%,var(--navy-2) 55%,#245380 100%);
+  color:#fff;
+  padding:1rem 0;
+  position:sticky;top:0;z-index:50;
+  box-shadow:0 6px 24px rgba(18,43,69,.28);
+}
+header.site::after{
+  content:"";display:block;position:absolute;inset-inline:0;bottom:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--accent-2) 40%,var(--blue-light) 100%);
+  opacity:.85;
+}
+.header-inner{
+  max-width:1140px;margin:0 auto;padding:0 1.2rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+}
+.logo{
+  display:flex;align-items:center;gap:.75rem;
+  font-weight:700;font-size:1.3rem;color:#fff;text-decoration:none;letter-spacing:.01em;
+}
+.logo-mark{
+  width:48px;height:48px;border-radius:14px;
+  background:linear-gradient(135deg,var(--gold),var(--accent-2));
+  display:grid;place-items:center;font-size:1.45rem;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(233,180,76,.4);
+}
+.logo small{
+  display:block;font-family:'Heebo';font-size:.72rem;font-weight:400;
+  opacity:.75;letter-spacing:.06em;margin-top:-2px;
+}
+.header-spacer{flex:1}
+.a11y{display:flex;align-items:center;gap:.4rem}
+.a11y span{font-size:.82rem;opacity:.85}
+.a11y button{
+  width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.08);color:#fff;font-weight:700;font-size:1rem;
+  cursor:pointer;transition:background .15s,border-color .15s;
+}
+.a11y button:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.7)}
+.home-btn{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.35);
+  color:#fff;text-decoration:none;font-weight:600;
+  padding:.5rem 1.2rem;border-radius:999px;font-size:.93rem;
+  transition:background .15s,border-color .15s;
+}
+.home-btn:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.7)}
+
+/* ---------- Breadcrumbs ---------- */
+nav.crumbs{
+  max-width:1140px;margin:1.2rem auto 0;padding:0 1.2rem;
+  font-size:.9rem;color:var(--ink-soft);
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+}
+nav.crumbs a{color:var(--blue);text-decoration:none;font-weight:600}
+nav.crumbs a:hover{text-decoration:underline}
+nav.crumbs .sep{opacity:.45}
+
+/* ---------- Layout ---------- */
+main{flex:1;max-width:1140px;width:100%;margin:0 auto;padding:1.4rem 1.2rem 4rem}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;text-align:center;
+  padding:3.4rem 1.5rem 3rem;margin-bottom:2.2rem;
+  background:
+    radial-gradient(600px 300px at 18% 0%, rgba(233,180,76,.16), transparent 60%),
+    radial-gradient(700px 340px at 85% 10%, rgba(91,148,196,.22), transparent 60%),
+    linear-gradient(160deg,var(--white) 0%,var(--pale) 100%);
+  border-radius:calc(var(--radius) + 6px);
+  box-shadow:var(--shadow),var(--ring);
+  overflow:hidden;
+}
+.hero::before,.hero::after{
+  content:"";position:absolute;border-radius:50%;pointer-events:none;
+}
+.hero::before{
+  width:220px;height:220px;left:-70px;bottom:-90px;
+  background:radial-gradient(circle at 30% 30%,rgba(46,109,163,.16),transparent 70%);
+}
+.hero::after{
+  width:260px;height:260px;right:-80px;top:-110px;
+  background:radial-gradient(circle at 60% 60%,rgba(222,113,50,.13),transparent 70%);
+}
+.hero .eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--white);border:1px solid var(--sky);
+  color:var(--blue);font-weight:700;font-size:.85rem;letter-spacing:.04em;
+  padding:.35rem 1.1rem;border-radius:999px;margin-bottom:1.2rem;
+  box-shadow:0 3px 10px rgba(46,109,163,.10);
+}
+.hero h1{
+  font-size:2.6rem;font-weight:800;color:var(--navy);line-height:1.22;margin-bottom:1rem;
+}
+.hero h1 em{
+  font-style:normal;color:var(--blue);
+  background:linear-gradient(transparent 62%,rgba(233,180,76,.45) 62%);
+  padding:0 .15em;border-radius:4px;
+}
+.hero p.lead{
+  font-size:1.16rem;color:var(--ink-soft);max-width:46rem;margin:0 auto;
+}
+.hero .trust{
+  display:flex;justify-content:center;gap:.9rem;flex-wrap:wrap;margin-top:1.9rem;
+}
+.hero .trust span{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--white);border:1px solid var(--sky);
+  color:var(--navy-2);font-weight:600;font-size:.93rem;
+  padding:.5rem 1.15rem;border-radius:999px;
+  box-shadow:0 3px 10px rgba(18,43,69,.06);
+}
+
+/* ---------- Program cards (home) ---------- */
+.program-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr));
+  gap:1.8rem;
+}
+.program-card{
+  position:relative;
+  background:linear-gradient(170deg,var(--white) 0%,var(--pale) 100%);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow),var(--ring);
+  padding:2.4rem 2.1rem 2.1rem;
+  display:flex;flex-direction:column;gap:1.05rem;
+  text-decoration:none;color:var(--ink);
+  overflow:hidden;
+  transition:transform .22s,box-shadow .22s;
+}
+.program-card::before{
+  content:"";position:absolute;inset-inline:0;top:0;height:7px;
+  background:linear-gradient(90deg,var(--blue),var(--blue-light));
+}
+.program-card.b{background:linear-gradient(170deg,var(--white) 0%,var(--teal-pale) 100%)}
+.program-card.b::before{background:linear-gradient(90deg,var(--teal),var(--teal-2))}
+.program-card::after{
+  content:"";position:absolute;width:260px;height:260px;border-radius:50%;
+  left:-95px;bottom:-125px;
+  background:radial-gradient(circle,rgba(46,109,163,.24),transparent 68%);
+  pointer-events:none;transition:transform .3s;
+}
+.program-card.b::after{background:radial-gradient(circle,rgba(19,122,108,.24),transparent 68%)}
+.program-card:hover::after{transform:scale(1.2)}
+.program-card:hover{transform:translateY(-7px);box-shadow:var(--shadow-lg)}
+.pc-icon{
+  width:78px;height:78px;border-radius:22px;
+  background:linear-gradient(135deg,var(--sky),var(--pale));
+  border:1px solid var(--sky);
+  display:grid;place-items:center;font-size:2.3rem;
+  box-shadow:0 6px 16px rgba(46,109,163,.14);
+}
+.program-card.b .pc-icon{
+  background:linear-gradient(135deg,var(--teal-soft),var(--teal-pale));
+  border-color:var(--teal-soft);
+  box-shadow:0 6px 16px rgba(19,122,108,.14);
+}
+.pc-tag{
+  align-self:flex-start;font-size:.8rem;font-weight:700;letter-spacing:.05em;
+  background:var(--navy);color:#fff;
+  padding:.25rem .95rem;border-radius:999px;
+}
+.program-card.b .pc-tag{background:var(--teal)}
+.program-card h2{font-size:1.45rem;font-weight:700;color:var(--navy);line-height:1.38}
+.program-card.b h2{color:var(--teal)}
+.program-card p{color:var(--ink-soft);font-size:1.02rem}
+.pc-cta{
+  margin-top:auto;display:inline-flex;align-items:center;gap:.55rem;
+  font-weight:700;color:var(--blue);font-size:1.02rem;
+  transition:gap .18s;
+}
+.program-card:hover .pc-cta{gap:.9rem}
+.program-card.b .pc-cta{color:var(--teal)}
+
+/* ---------- Program page ---------- */
+.page-head{
+  position:relative;overflow:hidden;
+  background:linear-gradient(165deg,var(--white) 0%,var(--pale) 100%);
+  border-radius:var(--radius);box-shadow:var(--shadow),var(--ring);
+  padding:2.5rem 2.3rem;margin-bottom:2.2rem;
+}
+.page-head::before{
+  content:"";position:absolute;inset-block:0;right:0;width:8px;
+  background:linear-gradient(180deg,var(--blue),var(--blue-light));
+}
+.page-head.b{background:linear-gradient(165deg,var(--white) 0%,var(--teal-pale) 100%)}
+.page-head.b::before{background:linear-gradient(180deg,var(--teal),var(--teal-2))}
+.page-head .kicker{
+  font-size:.85rem;font-weight:700;color:var(--blue);letter-spacing:.06em;margin-bottom:.4rem;
+}
+.page-head.b .kicker{color:var(--teal)}
+.page-head h1{font-size:2rem;font-weight:800;color:var(--navy);line-height:1.3;margin-bottom:1rem}
+.page-head.b h1{color:var(--teal)}
+.page-head p{color:var(--ink-soft);font-size:1.05rem;max-width:54rem;margin-bottom:.6rem}
+.principles{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.2rem}
+.principles span{
+  background:var(--white);border:1px solid var(--cream-2);
+  border-radius:999px;padding:.32rem 1.05rem;
+  font-size:.88rem;font-weight:600;color:var(--ink);
+  box-shadow:0 2px 8px rgba(18,43,69,.05);
+}
+
+h2.section{
+  font-size:1.55rem;font-weight:700;color:var(--navy);
+  margin:2.4rem 0 .45rem;display:flex;align-items:center;gap:.65rem;
+}
+h2.section + p.section-sub{color:var(--ink-soft);margin-bottom:1.5rem}
+
+/* ---------- Roadmap ---------- */
+.roadmap{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(min(248px,100%),1fr));
+  gap:1.2rem;
+}
+.month-card{
+  position:relative;overflow:hidden;
+  background:var(--white);border-radius:var(--radius-sm);
+  box-shadow:var(--shadow),var(--ring);
+  padding:1.45rem 1.3rem 1.25rem;
+  text-decoration:none;color:var(--ink);
+  display:flex;flex-direction:column;gap:.5rem;
+  transition:transform .18s,box-shadow .18s;
+}
+.month-card::before{
+  content:"";position:absolute;inset-inline:0;top:0;height:4px;
+  background:linear-gradient(90deg,var(--blue),var(--blue-light));
+  opacity:0;transition:opacity .18s;
+}
+.roadmap.b .month-card::before{background:linear-gradient(90deg,var(--teal),var(--teal-2))}
+.month-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.month-card:hover::before{opacity:1}
+.month-num{
+  width:56px;height:56px;border-radius:16px;
+  background:linear-gradient(135deg,var(--navy-2),var(--blue));
+  color:#fff;
+  display:grid;place-items:center;font-weight:700;font-size:.92rem;line-height:1.15;
+  text-align:center;box-shadow:0 5px 14px rgba(27,62,99,.28);
+}
+.roadmap.b .month-num{
+  background:linear-gradient(135deg,var(--teal),var(--teal-2));
+  box-shadow:0 5px 14px rgba(19,122,108,.28);
+}
+.month-card h3{font-size:1.14rem;font-weight:700;color:var(--navy);line-height:1.35}
+.roadmap.b .month-card h3{color:var(--teal)}
+.month-card p{font-size:.92rem;color:var(--ink-soft)}
+.month-card .go{margin-top:auto;font-size:.88rem;font-weight:700;color:var(--accent)}
+
+/* ---------- Month page ---------- */
+.lesson-list{display:flex;flex-direction:column;gap:1.05rem;margin-top:1.2rem}
+.lesson-row{
+  background:var(--white);border-radius:var(--radius-sm);
+  box-shadow:var(--shadow),var(--ring);
+  padding:1.4rem 1.5rem;display:flex;align-items:center;gap:1.25rem;
+  text-decoration:none;color:var(--ink);
+  border-inline-start:5px solid transparent;
+  transition:border-color .16s,transform .16s,box-shadow .16s;
+}
+.lesson-row:hover{border-inline-start-color:var(--blue);transform:translateX(-5px);box-shadow:var(--shadow-lg)}
+.lesson-row.b:hover{border-inline-start-color:var(--teal)}
+.lesson-badge{
+  flex-shrink:0;width:62px;height:62px;border-radius:18px;
+  background:linear-gradient(135deg,var(--sky),var(--pale));
+  border:1px solid var(--sky);color:var(--navy-2);
+  display:grid;place-items:center;font-weight:800;font-size:.9rem;text-align:center;line-height:1.2;
+}
+.lesson-row.b .lesson-badge{
+  background:linear-gradient(135deg,var(--teal-soft),var(--teal-pale));
+  border-color:var(--teal-soft);color:var(--teal);
+}
+.lesson-row h3{font-size:1.18rem;font-weight:700;color:var(--navy)}
+.lesson-row.b h3{color:var(--teal)}
+.lesson-row p{font-size:.95rem;color:var(--ink-soft)}
+.lesson-row .arrow{margin-inline-start:auto;font-size:1.5rem;color:var(--accent);flex-shrink:0}
+
+/* ---------- Lesson page ---------- */
+.lesson-head{
+  position:relative;overflow:hidden;
+  background:linear-gradient(165deg,var(--white) 0%,var(--pale) 100%);
+  border-radius:var(--radius);box-shadow:var(--shadow),var(--ring);
+  padding:2.2rem;margin-bottom:1.7rem;
+}
+.lesson-head::before{
+  content:"";position:absolute;inset-block:0;right:0;width:8px;
+  background:linear-gradient(180deg,var(--blue),var(--blue-light));
+}
+.lesson-head.b{background:linear-gradient(165deg,var(--white) 0%,var(--teal-pale) 100%)}
+.lesson-head.b::before{background:linear-gradient(180deg,var(--teal),var(--teal-2))}
+.lesson-head .kicker{font-size:.85rem;font-weight:700;color:var(--blue);letter-spacing:.05em;margin-bottom:.3rem}
+.lesson-head.b .kicker{color:var(--teal)}
+.lesson-head h1{font-size:1.8rem;font-weight:800;color:var(--navy);margin-bottom:.75rem;line-height:1.3}
+.lesson-head.b h1{color:var(--teal)}
+.lesson-head p{color:var(--ink-soft);font-size:1.05rem;max-width:54rem}
+.goals{
+  margin-top:1.15rem;background:var(--white);
+  border:1px solid var(--sky);
+  border-radius:var(--radius-sm);padding:1.05rem 1.35rem;
+}
+.lesson-head.b .goals{border-color:var(--teal-soft)}
+.goals strong{display:block;margin-bottom:.35rem;color:var(--navy-2)}
+.lesson-head.b .goals strong{color:var(--teal)}
+.goals ul{margin:0;padding-inline-start:1.25rem;color:var(--ink-soft);font-size:.98rem}
+
+.block{
+  background:var(--white);border-radius:var(--radius);
+  box-shadow:var(--shadow),var(--ring);
+  padding:1.9rem 2.1rem;margin-bottom:1.7rem;
+}
+.block h2{
+  font-size:1.35rem;font-weight:700;color:var(--navy);
+  display:flex;align-items:center;gap:.7rem;margin-bottom:1.1rem;
+}
+.block h2 .bicon{
+  width:48px;height:48px;border-radius:14px;
+  background:linear-gradient(135deg,var(--sky),var(--pale));
+  border:1px solid var(--sky);
+  display:grid;place-items:center;font-size:1.3rem;flex-shrink:0;
+}
+
+/* video */
+.video-shell{
+  position:relative;width:100%;aspect-ratio:16/9;
+  background:
+    radial-gradient(500px 260px at 20% 10%, rgba(91,148,196,.35), transparent 60%),
+    radial-gradient(420px 240px at 85% 90%, rgba(233,180,76,.18), transparent 60%),
+    linear-gradient(140deg,#0E2237 0%,var(--navy-2) 60%,#2A5A8C 100%);
+  border-radius:var(--radius-sm);overflow:hidden;
+  display:grid;place-items:center;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.video-shell iframe,.video-shell video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-placeholder{text-align:center;color:#fff;padding:1rem}
+.play-circle{
+  width:92px;height:92px;border-radius:50%;margin:0 auto 1.1rem;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent));
+  display:grid;place-items:center;font-size:2rem;color:#fff;
+  box-shadow:0 10px 28px rgba(222,113,50,.45);
+}
+.video-placeholder p{font-size:1.08rem;font-weight:600}
+.video-placeholder small{opacity:.7;font-size:.85rem;display:block;margin-top:.35rem}
+.video-note{margin-top:.9rem;font-size:.9rem;color:var(--ink-soft)}
+
+/* worksheets */
+.worksheets{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(256px,100%),1fr));gap:1.05rem}
+.ws-btn{
+  display:flex;align-items:center;gap:1rem;text-decoration:none;
+  background:linear-gradient(160deg,#FFFDF9 0%,var(--cream) 100%);
+  border:1px solid var(--cream-2);
+  border-radius:var(--radius-sm);padding:1.15rem 1.25rem;color:var(--ink);
+  transition:border-color .16s,transform .16s,box-shadow .16s;
+}
+.ws-btn:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 28px rgba(222,113,50,.16)}
+.ws-icon{
+  flex-shrink:0;width:58px;height:58px;border-radius:16px;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent));
+  color:#fff;display:grid;place-items:center;
+  font-weight:800;font-size:.82rem;flex-direction:column;
+  box-shadow:0 6px 14px rgba(222,113,50,.35);
+}
+.ws-icon svg{display:block}
+.ws-btn h3{font-size:1rem;font-weight:700;line-height:1.35;color:var(--ink);font-family:'Heebo'}
+.ws-btn span.dl{
+  display:inline-flex;align-items:center;gap:.3rem;
+  font-size:.85rem;font-weight:700;color:var(--accent-dark);margin-top:.15rem;
+}
+
+/* month nav footer */
+.month-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:.5rem;flex-wrap:wrap}
+.month-nav a{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--white);box-shadow:var(--shadow),var(--ring);
+  border-radius:999px;padding:.65rem 1.5rem;text-decoration:none;
+  font-weight:700;color:var(--navy-2);font-size:.95rem;
+  border:1px solid transparent;transition:border-color .15s,transform .15s;
+}
+.month-nav a:hover{border-color:var(--blue);transform:translateY(-2px)}
+
+/* big CTA */
+.big-cta{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent));
+  color:#fff;text-decoration:none;
+  font-weight:800;font-size:1.08rem;padding:.9rem 2.2rem;border-radius:999px;
+  box-shadow:0 10px 24px rgba(222,113,50,.4);
+  transition:transform .15s,box-shadow .15s;border:none;cursor:pointer;
+}
+.big-cta:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(222,113,50,.5)}
+
+/* info strip (home) */
+.info-strip{
+  margin-top:2.6rem;
+  background:linear-gradient(165deg,var(--white) 0%,var(--pale) 100%);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow),var(--ring);
+  padding:2.1rem 2.2rem;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:1.7rem;
+}
+.info-strip h3{
+  font-size:1.08rem;font-weight:700;color:var(--navy);
+  display:flex;align-items:center;gap:.55rem;margin-bottom:.4rem;
+}
+.info-strip .num{
+  width:40px;height:40px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--sky),var(--pale));
+  border:1px solid var(--sky);
+  display:grid;place-items:center;font-size:1.15rem;
+}
+.info-strip p{font-size:.94rem;color:var(--ink-soft)}
+
+/* footer */
+footer.site{
+  background:linear-gradient(120deg,var(--navy) 0%,var(--navy-2) 100%);
+  color:#fff;padding:2.2rem 1.2rem;text-align:center;font-size:.92rem;
+  position:relative;
+}
+footer.site::before{
+  content:"";position:absolute;inset-inline:0;top:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--accent-2) 40%,var(--blue-light) 100%);
+  opacity:.85;
+}
+footer.site .foot-logo{
+  font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:1.15rem;
+  display:inline-flex;align-items:center;gap:.5rem;margin-bottom:.5rem;
+}
+footer.site p{opacity:.85}
+footer.site .foot-note{font-size:.82rem;opacity:.6;margin-top:.4rem;max-width:44rem;margin-inline:auto}
+
+/* ---------- Calming decorative circles (site-wide) ---------- */
+.page-head,.lesson-head,.block,.info-strip,.month-card,.lesson-row,footer.site,.goals{position:relative;overflow:hidden}
+
+.page-head::after,.lesson-head::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle 240px at 2% 112%, rgba(46,109,163,.28), transparent 68%),
+    radial-gradient(circle 200px at 98% -15%, rgba(233,180,76,.30), transparent 68%),
+    radial-gradient(circle 140px at 72% 118%, rgba(91,148,196,.20), transparent 68%);
+}
+.page-head.b::after,.lesson-head.b::after{
+  background:
+    radial-gradient(circle 240px at 2% 112%, rgba(19,122,108,.26), transparent 68%),
+    radial-gradient(circle 200px at 98% -15%, rgba(233,180,76,.30), transparent 68%),
+    radial-gradient(circle 140px at 72% 118%, rgba(30,147,132,.18), transparent 68%);
+}
+
+.block::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle 220px at 102% -8%, rgba(46,109,163,.20), transparent 68%),
+    radial-gradient(circle 190px at -5% 112%, rgba(233,180,76,.22), transparent 68%);
+}
+
+.info-strip::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle 230px at -5% -25%, rgba(233,180,76,.26), transparent 68%),
+    radial-gradient(circle 260px at 106% 125%, rgba(46,109,163,.24), transparent 68%);
+}
+
+.month-card::after{
+  content:"";position:absolute;width:190px;height:190px;border-radius:50%;
+  left:-70px;bottom:-80px;pointer-events:none;
+  background:radial-gradient(circle at 45% 45%, rgba(46,109,163,.22), transparent 68%);
+  transition:transform .3s;
+}
+.roadmap.b .month-card::after{background:radial-gradient(circle at 45% 45%, rgba(19,122,108,.22), transparent 68%)}
+.month-card:hover::after{transform:scale(1.3)}
+
+.lesson-row::after{
+  content:"";position:absolute;width:180px;height:180px;border-radius:50%;
+  left:-55px;top:-70px;pointer-events:none;
+  background:radial-gradient(circle at 50% 50%, rgba(233,180,76,.20), transparent 68%);
+}
+
+footer.site::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle 260px at 6% 140%, rgba(91,148,196,.30), transparent 68%),
+    radial-gradient(circle 220px at 95% -35%, rgba(233,180,76,.18), transparent 68%);
+}
+
+.goals::after{
+  content:"";position:absolute;width:160px;height:160px;border-radius:50%;
+  left:-50px;bottom:-70px;pointer-events:none;
+  background:radial-gradient(circle, rgba(147,190,224,.45), transparent 70%);
+}
+
+/* hero circles — slightly stronger too */
+.hero::before{
+  width:260px;height:260px;left:-80px;bottom:-100px;
+  background:radial-gradient(circle at 30% 30%,rgba(46,109,163,.24),transparent 70%);
+}
+.hero::after{
+  width:300px;height:300px;right:-90px;top:-120px;
+  background:radial-gradient(circle at 60% 60%,rgba(222,113,50,.20),transparent 70%);
+}
+
+/* ===================================================================
+   STEM HUB — pastel interactive hub
+   =================================================================== */
+.hub-hero{
+  position:relative;overflow:hidden;
+  border-radius:var(--radius-lg);
+  background:
+    radial-gradient(680px 340px at 12% 8%, rgba(207,237,228,.75), transparent 62%),
+    radial-gradient(620px 320px at 88% 6%, rgba(212,230,247,.8), transparent 62%),
+    radial-gradient(520px 300px at 78% 100%, rgba(250,223,203,.6), transparent 62%),
+    radial-gradient(480px 280px at 8% 96%, rgba(223,220,243,.6), transparent 62%),
+    linear-gradient(165deg,#FFFFFF 0%,#F6FAFD 100%);
+  box-shadow:var(--shadow-soft),var(--ring);
+  padding:2.8rem 2.4rem 2.4rem;
+  margin-bottom:2.2rem;
+  display:flex;flex-direction:column;align-items:center;gap:1.6rem;
+}
+.hub-hero::before{
+  content:"";position:absolute;width:340px;height:340px;border-radius:50%;
+  left:-130px;bottom:-170px;pointer-events:none;
+  background:radial-gradient(circle at 40% 40%, rgba(30,122,140,.16), transparent 68%);
+}
+.hub-hero::after{
+  content:"";position:absolute;width:300px;height:300px;border-radius:50%;
+  right:-120px;top:-150px;pointer-events:none;
+  background:radial-gradient(circle at 55% 55%, rgba(233,180,76,.18), transparent 68%);
+}
+.hub-copy{position:relative;z-index:2;text-align:center}
+.hub-eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,.9);border:1px solid var(--p-sky);
+  color:var(--p-sky-ink);font-weight:700;font-size:.84rem;letter-spacing:.05em;
+  padding:.35rem 1.1rem;border-radius:999px;margin-bottom:1.1rem;
+  box-shadow:0 3px 12px rgba(42,101,152,.12);
+}
+.hub-title{
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(1.75rem,7vw,3.5rem);font-weight:900;line-height:1.15;
+  color:var(--navy);margin-bottom:.35rem;letter-spacing:-.01em;
+}
+.hub-title .stem{
+  background:linear-gradient(115deg,var(--p-sky-ink),var(--p-mint-ink) 45%,var(--p-lilac-ink));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  font-family:'Heebo',sans-serif;font-weight:800;letter-spacing:.06em;
+}
+.hub-sub{
+  color:var(--ink-soft);font-size:1.08rem;max-width:34rem;margin:.7rem auto 0;
+}
+.hub-chips{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin-top:1.4rem}
+.hub-chips span{
+  background:rgba(255,255,255,.92);border:1px solid var(--p-slate);
+  border-radius:999px;padding:.42rem 1.05rem;font-size:.88rem;font-weight:600;
+  color:var(--p-slate-ink);box-shadow:0 3px 10px rgba(65,88,110,.07);
+}
+
+/* ---------- interactive body figure ---------- */
+.body-stage{
+  position:relative;z-index:2;display:grid;place-items:center;
+  width:100%;padding:.2rem 0 0;
+}
+.body-stage::before{
+  content:"";position:absolute;top:-.9rem;left:50%;transform:translateX(-50%);
+  width:min(320px,70%);height:2px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--p-sky),var(--p-mint),transparent);
+}
+.body-svg{
+  width:100%;max-width:500px;height:auto;overflow:visible;
+  filter:drop-shadow(0 20px 42px rgba(41,74,105,.22));
+}
+
+/* silhouette */
+.fig-body{fill:url(#skinG);stroke:#7FA9CB;stroke-width:1.8}
+.fig-limb{stroke:url(#limbG);stroke-linecap:round;fill:none}
+.fig-limb-out{stroke:#7FA9CB;stroke-linecap:round;fill:none;opacity:.55}
+
+/* organs */
+.organ{transition:opacity .28s,transform .3s;transform-box:fill-box;transform-origin:center}
+.organ-g{opacity:.92}
+.dim .organ-g{opacity:.28}
+.dim .organ-g.lit{opacity:1}
+.organ-g.lit .organ{transform:scale(1.09)}
+#g-heart .organ{animation:beat 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.13)}24%{transform:scale(1)}36%{transform:scale(1.08)}48%{transform:scale(1)}}
+#g-lungs .organ{animation:breathe 4.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+
+/* hotspots */
+.hot{cursor:pointer}
+.hot .hit{pointer-events:all}
+.hot .halo{
+  fill:currentColor;opacity:.3;transform-box:fill-box;transform-origin:center;
+  animation:hpulse 2.8s ease-out infinite;
+}
+.hot:nth-of-type(2n) .halo{animation-delay:.6s}
+.hot:nth-of-type(3n) .halo{animation-delay:1.2s}
+@keyframes hpulse{0%{transform:scale(.65);opacity:.4}70%{transform:scale(2.3);opacity:0}100%{opacity:0}}
+.hot .dot{
+  fill:currentColor;stroke:#fff;stroke-width:3;
+  transform-box:fill-box;transform-origin:center;
+  transition:transform .25s cubic-bezier(.2,.9,.3,1.4);
+  filter:drop-shadow(0 3px 7px rgba(28,55,80,.35));
+}
+.hot .dot-n{
+  fill:#fff;font-size:11px;font-weight:800;font-family:'Heebo',sans-serif;
+  text-anchor:middle;dominant-baseline:central;pointer-events:none;
+}
+.hot:hover .dot,.hot:focus-visible .dot,.hot.on .dot{transform:scale(1.55)}
+.hot:hover .halo,.hot.on .halo{opacity:.5}
+.hot .lead{stroke:currentColor;stroke-width:1.6;stroke-dasharray:4 4;opacity:.5;transition:opacity .2s}
+.hot:hover .lead,.hot.on .lead{opacity:1;stroke-dasharray:none}
+.hot .lbl{
+  font-family:'Heebo',sans-serif;font-size:12.5px;font-weight:700;
+  fill:var(--navy);paint-order:stroke;stroke:#fff;stroke-width:4.5;stroke-linejoin:round;
+  transition:fill .2s;
+}
+.hot:hover .lbl,.hot.on .lbl{fill:var(--accent-dark)}
+.body-svg:focus-visible{outline:none}
+
+/* tooltip */
+.body-tip{
+  position:absolute;z-index:6;pointer-events:none;
+  background:linear-gradient(150deg,#173A5C,var(--navy));
+  color:#fff;border:1px solid rgba(255,255,255,.16);
+  border-radius:16px;padding:.75rem 1.05rem;max-width:250px;
+  font-size:.88rem;line-height:1.55;
+  box-shadow:0 16px 38px rgba(18,43,69,.4);
+  opacity:0;transform:translateY(8px) scale(.95);
+  transition:opacity .2s,transform .2s;
+}
+.body-tip.show{opacity:1;transform:translateY(0) scale(1)}
+.body-tip strong{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:.98rem;margin-bottom:.2rem;color:var(--p-sun);
+}
+.body-hint{
+  margin-top:.5rem;font-size:.84rem;color:var(--p-slate-ink);text-align:center;
+  background:rgba(255,255,255,.85);border:1px solid var(--p-slate);
+  border-radius:999px;padding:.3rem 1rem;box-shadow:0 3px 10px rgba(65,88,110,.08);
+}
+
+/* ---------- hub cards ---------- */
+.hub-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(min(268px,100%),1fr));
+  gap:1.3rem;
+}
+.hub-card{
+  position:relative;overflow:hidden;
+  border-radius:var(--radius);
+  background:linear-gradient(165deg,#fff 0%,var(--tone-2,#F6FAFD) 100%);
+  border:1px solid var(--tone,#E6EEF5);
+  box-shadow:var(--shadow-soft);
+  padding:1.6rem 1.5rem 1.4rem;
+  display:flex;flex-direction:column;gap:.6rem;
+  text-align:start;cursor:pointer;color:var(--ink);
+  transition:transform .22s cubic-bezier(.2,.8,.3,1),box-shadow .22s,border-color .22s;
+  font-family:inherit;
+}
+.hub-card::after{
+  content:"";position:absolute;width:190px;height:190px;border-radius:50%;
+  left:-70px;bottom:-85px;pointer-events:none;
+  background:radial-gradient(circle at 45% 45%, var(--tone,#E6EEF5), transparent 68%);
+  opacity:.85;transition:transform .35s;
+}
+.hub-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-hover);border-color:var(--tone-ink,#41586E)}
+.hub-card:hover::after{transform:scale(1.35)}
+.hub-icon{
+  width:62px;height:62px;border-radius:20px;
+  background:linear-gradient(140deg,var(--tone,#E6EEF5),#fff);
+  border:1px solid var(--tone,#E6EEF5);
+  display:grid;place-items:center;font-size:1.8rem;
+  box-shadow:0 6px 16px rgba(65,88,110,.12);
+  position:relative;z-index:2;transition:transform .25s;
+}
+.hub-card:hover .hub-icon{transform:scale(1.08) rotate(-4deg)}
+.hub-card h3{
+  font-size:1.16rem;font-weight:700;line-height:1.4;
+  color:var(--tone-ink,#41586E);position:relative;z-index:2;
+}
+.hub-card p{font-size:.92rem;color:var(--ink-soft);position:relative;z-index:2}
+.hub-card .meta{
+  margin-top:auto;display:flex;align-items:center;gap:.45rem;
+  font-size:.85rem;font-weight:700;color:var(--tone-ink,#41586E);
+  position:relative;z-index:2;transition:gap .2s;
+}
+.hub-card:hover .meta{gap:.8rem}
+.hub-card .count{
+  position:absolute;top:1.1rem;left:1.1rem;z-index:3;
+  background:rgba(255,255,255,.92);border:1px solid var(--tone,#E6EEF5);
+  color:var(--tone-ink,#41586E);
+  font-size:.74rem;font-weight:700;border-radius:999px;padding:.15rem .65rem;
+}
+
+/* ---------- modal ---------- */
+.backdrop{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(18,43,69,.42);backdrop-filter:blur(6px);
+  display:grid;place-items:center;padding:1.2rem;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.backdrop.open{opacity:1;pointer-events:auto}
+.modal{
+  position:relative;width:min(940px,100%);max-height:88vh;
+  display:flex;flex-direction:column;overflow:hidden;
+  border-radius:var(--radius-lg);
+  background:linear-gradient(170deg,#fff 0%,#F7FAFD 100%);
+  box-shadow:0 40px 90px rgba(18,43,69,.35);
+  transform:translateY(18px) scale(.97);opacity:0;
+  transition:transform .28s cubic-bezier(.2,.8,.3,1),opacity .28s;
+}
+.backdrop.open .modal{transform:none;opacity:1}
+.modal-head{
+  position:relative;overflow:hidden;flex-shrink:0;
+  padding:1.7rem 1.9rem 1.5rem;
+  background:linear-gradient(150deg,var(--tone-2,#EAF3FC) 0%,#fff 100%);
+  border-bottom:1px solid var(--tone,#E6EEF5);
+  display:flex;align-items:center;gap:1.1rem;
+}
+.modal-head::after{
+  content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+  left:-80px;bottom:-120px;pointer-events:none;
+  background:radial-gradient(circle,var(--tone,#E6EEF5),transparent 68%);
+}
+.modal-icon{
+  width:60px;height:60px;border-radius:18px;flex-shrink:0;position:relative;z-index:2;
+  background:linear-gradient(140deg,var(--tone,#E6EEF5),#fff);
+  border:1px solid var(--tone,#E6EEF5);
+  display:grid;place-items:center;font-size:1.75rem;
+  box-shadow:0 6px 16px rgba(65,88,110,.14);
+}
+.modal-head h2{
+  font-size:1.4rem;font-weight:800;color:var(--tone-ink,#41586E);line-height:1.3;
+  position:relative;z-index:2;
+}
+.modal-head p{font-size:.92rem;color:var(--ink-soft);position:relative;z-index:2}
+.modal-close{
+  margin-inline-start:auto;position:relative;z-index:3;flex-shrink:0;
+  width:44px;height:44px;border-radius:14px;border:1px solid var(--p-slate);
+  background:rgba(255,255,255,.9);color:var(--ink-soft);
+  font-size:1.35rem;line-height:1;cursor:pointer;
+  transition:background .16s,color .16s,transform .16s;
+}
+.modal-close:hover{background:var(--p-rose-2);color:var(--p-rose-ink);transform:rotate(90deg)}
+.modal-body{padding:1.7rem 1.9rem 2rem;overflow-y:auto}
+.modal-body::-webkit-scrollbar{width:10px}
+.modal-body::-webkit-scrollbar-thumb{background:var(--p-slate);border-radius:99px;border:3px solid #fff}
+
+.modal-back{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:#fff;border:1px solid var(--p-slate);
+  border-radius:999px;padding:.42rem 1.1rem;margin-bottom:1.2rem;
+  font-size:.88rem;font-weight:700;color:var(--p-slate-ink);cursor:pointer;
+  transition:border-color .16s,transform .16s;font-family:inherit;
+}
+.modal-back:hover{border-color:var(--tone-ink,#41586E);transform:translateX(4px)}
+
+@keyframes panelIn{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+.panel{animation:panelIn .3s cubic-bezier(.2,.8,.3,1) both}
+
+/* sub-category grid inside modal */
+.sub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(210px,100%),1fr));gap:1rem}
+.sub-card{
+  position:relative;overflow:hidden;text-align:start;cursor:pointer;font-family:inherit;
+  border-radius:var(--radius-sm);
+  background:linear-gradient(165deg,#fff 0%,var(--tone-2,#F6FAFD) 100%);
+  border:1px solid var(--tone,#E6EEF5);
+  padding:1.15rem 1.15rem 1rem;
+  display:flex;flex-direction:column;gap:.4rem;color:var(--ink);
+  box-shadow:0 4px 16px rgba(65,88,110,.07);
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+}
+.sub-card::after{
+  content:"";position:absolute;width:130px;height:130px;border-radius:50%;
+  left:-48px;bottom:-60px;pointer-events:none;
+  background:radial-gradient(circle,var(--tone,#E6EEF5),transparent 68%);
+}
+.sub-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-soft);border-color:var(--tone-ink,#41586E)}
+.sub-emoji{font-size:1.5rem;position:relative;z-index:2}
+.sub-card h4{font-size:1.02rem;font-weight:700;color:var(--tone-ink,#41586E);position:relative;z-index:2}
+.sub-card p{font-size:.85rem;color:var(--ink-soft);position:relative;z-index:2}
+.sub-card .go-mini{
+  margin-top:auto;font-size:.8rem;font-weight:700;color:var(--accent);position:relative;z-index:2;
+}
+.sub-card .badge-link{
+  position:absolute;top:.7rem;left:.7rem;z-index:3;
+  background:var(--p-sun-2);border:1px solid var(--p-sun);color:var(--p-sun-ink);
+  font-size:.7rem;font-weight:700;border-radius:999px;padding:.1rem .55rem;
+}
+
+/* workspace inside modal */
+.ws-head{margin-bottom:1.2rem}
+.ws-head h3{font-size:1.25rem;font-weight:800;color:var(--tone-ink,#41586E);margin-bottom:.25rem}
+.ws-head p{color:var(--ink-soft);font-size:.95rem}
+
+.dz{
+  position:relative;border-radius:var(--radius);
+  border:2px dashed var(--tone,#CBD8E4);
+  background:linear-gradient(165deg,#fff 0%,var(--tone-2,#F6FAFD) 100%);
+  padding:2.1rem 1.5rem;text-align:center;cursor:pointer;
+  transition:border-color .2s,background .2s,transform .2s;
+}
+.dz:hover{border-color:var(--tone-ink,#41586E);transform:translateY(-2px)}
+.dz.drag{
+  border-color:var(--accent);
+  background:linear-gradient(165deg,#FFF8F3 0%,#FDF0E6 100%);
+  transform:scale(1.01);
+}
+.dz-icon{
+  width:70px;height:70px;border-radius:22px;margin:0 auto .8rem;
+  background:linear-gradient(140deg,var(--tone,#E6EEF5),#fff);
+  border:1px solid var(--tone,#E6EEF5);
+  display:grid;place-items:center;font-size:1.9rem;
+  box-shadow:0 6px 18px rgba(65,88,110,.12);
+  transition:transform .25s;
+}
+.dz:hover .dz-icon{transform:translateY(-4px)}
+.dz h4{font-size:1.08rem;font-weight:700;color:var(--tone-ink,#41586E);margin-bottom:.2rem}
+.dz p{font-size:.9rem;color:var(--ink-soft)}
+.dz .pick{
+  display:inline-block;margin-top:.9rem;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent));
+  color:#fff;font-weight:700;font-size:.92rem;
+  padding:.55rem 1.5rem;border-radius:999px;
+  box-shadow:0 8px 20px rgba(222,113,50,.32);
+}
+.dz-note{font-size:.8rem;color:var(--ink-soft);opacity:.8;margin-top:.7rem}
+
+.files-head{
+  display:flex;align-items:center;gap:.6rem;margin:1.6rem 0 .9rem;flex-wrap:wrap;
+}
+.files-head h4{font-size:1.05rem;font-weight:700;color:var(--navy)}
+.files-head .cnt{
+  background:var(--p-slate-2);border:1px solid var(--p-slate);color:var(--p-slate-ink);
+  font-size:.78rem;font-weight:700;border-radius:999px;padding:.1rem .6rem;
+}
+.files-head .clear{
+  margin-inline-start:auto;background:none;border:1px solid var(--p-rose);
+  color:var(--p-rose-ink);border-radius:999px;padding:.28rem .95rem;
+  font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit;
+  transition:background .16s;
+}
+.files-head .clear:hover{background:var(--p-rose-2)}
+
+.file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(170px,100%),1fr));gap:.95rem}
+.file-item{
+  position:relative;border-radius:var(--radius-sm);overflow:hidden;
+  background:#fff;border:1px solid var(--p-slate);
+  box-shadow:0 4px 14px rgba(65,88,110,.08);
+  transition:transform .18s,box-shadow .18s;
+  animation:panelIn .28s both;
+}
+.file-item:hover{transform:translateY(-4px);box-shadow:var(--shadow-soft)}
+.file-thumb{
+  height:112px;display:grid;place-items:center;font-size:2.1rem;
+  background:linear-gradient(150deg,var(--p-slate-2),#fff);
+  overflow:hidden;
+}
+.file-thumb img,.file-thumb video{width:100%;height:100%;object-fit:cover;display:block}
+.file-meta{padding:.65rem .8rem .75rem}
+.file-meta .nm{
+  font-size:.85rem;font-weight:600;line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  word-break:break-word;
+}
+.file-meta .sz{font-size:.75rem;color:var(--ink-soft);margin-top:.15rem}
+.file-actions{position:absolute;top:.45rem;left:.45rem;display:flex;gap:.3rem;opacity:0;transition:opacity .18s}
+.file-item:hover .file-actions{opacity:1}
+.file-actions button,.file-actions a{
+  width:32px;height:32px;border-radius:10px;border:none;cursor:pointer;
+  display:grid;place-items:center;font-size:.95rem;text-decoration:none;
+  background:rgba(255,255,255,.94);color:var(--ink-soft);
+  box-shadow:0 3px 10px rgba(18,43,69,.18);font-family:inherit;
+  transition:background .16s,color .16s;
+}
+.file-actions button:hover{background:var(--p-rose);color:#fff}
+.file-actions a:hover{background:var(--p-sky);color:var(--p-sky-ink)}
+
+.empty{
+  text-align:center;padding:1.8rem 1rem;color:var(--ink-soft);
+  border-radius:var(--radius-sm);background:var(--p-slate-2);
+  border:1px dashed var(--p-slate);font-size:.92rem;
+}
+.empty .ico{font-size:2rem;display:block;margin-bottom:.4rem;opacity:.6}
+
+/* ---------- shared library ---------- */
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(196px,100%),1fr));gap:1rem}
+.lib-item{
+  position:relative;border-radius:var(--radius-sm);overflow:hidden;cursor:pointer;
+  background:#fff;border:1px solid var(--p-slate);
+  box-shadow:0 4px 14px rgba(65,88,110,.08);
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+  animation:panelIn .28s both;
+}
+.lib-item:hover{transform:translateY(-5px);box-shadow:var(--shadow-soft);border-color:var(--tone-ink,#41586E)}
+.lib-thumb{
+  position:relative;height:124px;display:grid;place-items:center;overflow:hidden;
+  background:linear-gradient(150deg,var(--p-slate-2),#fff);
+}
+.lib-thumb img,.lib-thumb video{width:100%;height:100%;object-fit:cover;display:block}
+.lib-thumb .k-emoji{font-size:2.4rem;opacity:.9}
+.lib-thumb .kind{
+  position:absolute;top:.45rem;left:.45rem;
+  background:rgba(255,255,255,.94);border:1px solid var(--p-slate);
+  color:var(--p-slate-ink);font-size:.7rem;font-weight:700;
+  border-radius:999px;padding:.08rem .55rem;
+}
+.lib-thumb .play-badge{
+  position:absolute;width:44px;height:44px;border-radius:50%;
+  background:rgba(18,43,69,.55);color:#fff;display:grid;place-items:center;font-size:1.1rem;
+  backdrop-filter:blur(2px);
+}
+.lib-meta{padding:.7rem .8rem .8rem}
+.lib-meta .nm{
+  font-size:.87rem;font-weight:600;line-height:1.35;word-break:break-word;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.lib-meta .sz{font-size:.74rem;color:var(--ink-soft);margin-top:.1rem}
+.lib-actions{display:flex;gap:.35rem;margin-top:.6rem;flex-wrap:wrap}
+.act{
+  flex:1;min-width:78px;text-align:center;text-decoration:none;cursor:pointer;
+  font-family:inherit;font-size:.78rem;font-weight:700;
+  border-radius:9px;padding:.32rem .4rem;border:1px solid var(--p-slate);
+  background:#fff;color:var(--p-slate-ink);transition:background .15s,color .15s,border-color .15s;
+}
+.act.view:hover{background:var(--p-sky-2);color:var(--p-sky-ink);border-color:var(--p-sky)}
+.act.dl{background:var(--p-peach-2);color:var(--accent-dark);border-color:var(--p-peach)}
+.act.dl:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.act.del{flex:0 0 auto;min-width:34px;color:var(--p-rose-ink);border-color:var(--p-rose)}
+.act.del:hover{background:var(--p-rose-ink);color:#fff}
+
+.lib-refresh,.lib-gate{
+  background:#fff;border:1px solid var(--p-slate);color:var(--p-slate-ink);
+  border-radius:999px;padding:.28rem 1rem;font-size:.8rem;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:border-color .16s,background .16s;
+}
+.lib-refresh:hover{border-color:var(--p-sky-ink);color:var(--p-sky-ink)}
+.lib-gate{margin-inline-start:auto}
+.lib-gate:hover{border-color:var(--accent);color:var(--accent-dark)}
+.lib-gate.on{background:var(--p-sage-2);border-color:var(--p-sage);color:var(--p-sage-ink)}
+
+.note{
+  background:var(--p-sky-2);border:1px solid var(--p-sky);color:var(--p-sky-ink);
+  border-radius:var(--radius-sm);padding:.85rem 1.1rem;font-size:.88rem;margin:1rem 0 0;
+}
+.note.warn{background:var(--p-sun-2);border-color:var(--p-sun);color:var(--p-sun-ink)}
+.note code{background:rgba(255,255,255,.7);padding:.05rem .35rem;border-radius:5px;font-size:.85em}
+.up-zone{margin-top:1.5rem}
+
+/* youtube link adder */
+.yt-add{
+  margin-top:1rem;border-radius:var(--radius-sm);
+  background:linear-gradient(165deg,#FFF6F6,#FDECEC);
+  border:1px solid #F5D2D2;padding:1.1rem 1.2rem;
+}
+.yt-head{font-size:1.02rem;font-weight:700;color:#B0343C;display:flex;align-items:center;gap:.45rem}
+.yt-sub{font-size:.85rem;color:var(--ink-soft);margin:.15rem 0 .8rem}
+.yt-row{display:flex;gap:.6rem;flex-wrap:wrap}
+.yt-row input{
+  flex:1 1 200px;font-family:inherit;font-size:.9rem;
+  padding:.55rem .8rem;border-radius:11px;border:1px solid #EDC3C3;background:#fff;color:var(--ink);
+  transition:border-color .16s,box-shadow .16s;
+}
+#ytUrl{direction:ltr;text-align:left}
+.yt-row input:focus{outline:none;border-color:#D64A63;box-shadow:0 0 0 3px rgba(214,74,99,.14)}
+.yt-btn{
+  flex:0 0 auto;font-family:inherit;font-size:.9rem;font-weight:700;cursor:pointer;
+  border:none;border-radius:11px;padding:.55rem 1.4rem;color:#fff;
+  background:linear-gradient(135deg,#E05563,#C0303F);
+  box-shadow:0 6px 16px rgba(192,48,63,.28);transition:transform .15s,filter .15s;
+}
+.yt-btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.lib-item.is-yt{border-color:#F0CFCF}
+.lib-thumb .kind.yt{background:#C0303F;border-color:#C0303F;color:#fff}
+.play-badge.yt{background:rgba(192,48,63,.92);width:48px;height:48px;font-size:1.15rem}
+.act.yt{background:#FDECEC;color:#B0343C;border-color:#F0CFCF}
+.act.yt:hover{background:#C0303F;color:#fff;border-color:#C0303F}
+.up-log{
+  margin-top:.9rem;max-height:170px;overflow:auto;
+  background:#0F2438;color:#CFE4F4;border-radius:var(--radius-sm);
+  padding:.75rem 1rem;font-size:.82rem;line-height:1.6;
+  font-family:ui-monospace,Menlo,Consolas,monospace;direction:ltr;text-align:right;
+}
+.up-log .ln.ok{color:#8FE3B8}
+.up-log .ln.bad{color:#FFB3B3}
+
+/* ---------- viewer ---------- */
+.viewer{
+  position:fixed;inset:0;z-index:150;display:flex;flex-direction:column;
+  background:rgba(10,24,38,.92);backdrop-filter:blur(8px);
+  opacity:0;pointer-events:none;transition:opacity .24s;
+}
+.viewer.open{opacity:1;pointer-events:auto}
+.v-bar{
+  flex-shrink:0;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+  padding:.8rem 1.1rem;background:rgba(255,255,255,.07);
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.v-title{
+  color:#fff;font-weight:700;font-size:.98rem;margin-inline-end:auto;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52%;
+}
+.v-btn{
+  border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);
+  color:#fff;border-radius:999px;padding:.42rem 1.1rem;font-size:.86rem;font-weight:700;
+  text-decoration:none;cursor:pointer;font-family:inherit;transition:background .16s;
+}
+.v-btn:hover{background:rgba(255,255,255,.25)}
+.v-btn.primary{background:linear-gradient(135deg,var(--accent-2),var(--accent));border-color:transparent}
+.v-btn.primary:hover{filter:brightness(1.08)}
+.v-btn.close{width:42px;padding:.42rem 0;text-align:center}
+.v-body{
+  flex:1;display:grid;place-items:center;padding:1.1rem;overflow:auto;
+}
+.v-body img{max-width:100%;max-height:100%;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.v-body video{max-width:100%;max-height:100%;border-radius:14px;background:#000}
+.v-body iframe{width:100%;height:100%;min-height:70vh;border:0;border-radius:14px;background:#fff}
+.v-audio{display:grid;justify-items:center;gap:1rem;color:#fff}
+.v-audio span{font-size:3.4rem}
+.v-none{display:grid;justify-items:center;gap:.9rem;color:#fff;text-align:center}
+.v-none span{font-size:3rem;opacity:.8}
+
+/* ---------- team gate ---------- */
+.gate{
+  position:fixed;inset:0;z-index:180;display:grid;place-items:center;padding:1.2rem;
+  background:rgba(18,43,69,.5);backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .24s;
+}
+.gate.open{opacity:1;pointer-events:auto}
+.gate-box{
+  width:min(460px,100%);max-height:90vh;overflow:auto;
+  background:linear-gradient(170deg,#fff,#F5FAFD);
+  border-radius:var(--radius-lg);padding:1.8rem;
+  box-shadow:0 34px 80px rgba(18,43,69,.4);
+  transform:translateY(14px);transition:transform .26s;
+}
+.gate.open .gate-box{transform:none}
+.gate-box h3{font-size:1.3rem;font-weight:800;color:var(--navy);margin-bottom:.4rem}
+.gate-lead{font-size:.9rem;color:var(--ink-soft);margin-bottom:1.1rem}
+.gate-box label{display:block;font-size:.84rem;font-weight:700;color:var(--p-slate-ink);margin-bottom:.75rem}
+.gate-box input{
+  width:100%;margin-top:.28rem;font-family:inherit;font-size:.95rem;
+  padding:.6rem .85rem;border-radius:12px;border:1px solid var(--p-slate);
+  background:#fff;color:var(--ink);direction:ltr;text-align:left;
+  transition:border-color .16s,box-shadow .16s;
+}
+.gate-box input:focus{outline:none;border-color:var(--p-sky-ink);box-shadow:0 0 0 3px var(--p-sky-2)}
+.gate-box label.gate-main{font-size:.95rem;color:var(--navy);margin-bottom:.55rem}
+.gate-box label.gate-main input{
+  font-size:1.05rem;padding:.75rem .9rem;border-width:2px;border-color:var(--p-sky);
+  direction:rtl;text-align:right;letter-spacing:.04em;
+}
+.gate-box label.gate-main input:focus{border-color:var(--p-sky-ink)}
+.gate-note{font-size:.78rem;color:var(--ink-soft);background:var(--p-slate-2);
+  border-radius:10px;padding:.6rem .8rem;margin:.3rem 0 .8rem}
+.gate-adv{
+  border:1px solid var(--p-slate);border-radius:12px;
+  background:var(--p-slate-2);margin-bottom:.9rem;overflow:hidden;
+}
+.gate-adv summary{
+  cursor:pointer;list-style:none;padding:.6rem .85rem;
+  font-size:.83rem;font-weight:700;color:var(--p-slate-ink);
+  display:flex;align-items:center;gap:.35rem;
+}
+.gate-adv summary::-webkit-details-marker{display:none}
+.gate-adv summary::after{content:"▾";margin-inline-start:auto;transition:transform .2s}
+.gate-adv[open] summary::after{transform:rotate(180deg)}
+.gate-adv summary:hover{color:var(--navy)}
+.gate-adv > *:not(summary){padding-inline:.85rem}
+.gate-adv > label:last-of-type{padding-bottom:.85rem}
+.gate-adv label{font-size:.78rem}
+.gate-adv input{font-size:.88rem;padding:.45rem .7rem}
+.adv-note{font-size:.75rem;color:var(--ink-soft);margin-bottom:.6rem}
+.adv-note code{background:#fff;border-radius:5px;padding:.05rem .3rem;font-size:.95em}
+.gate-out{font-size:.86rem;font-weight:700;color:var(--p-slate-ink);min-height:1.3rem;margin-bottom:.6rem}
+.gate-actions{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.gate-ghost{
+  background:none;border:1px solid var(--p-slate);color:var(--ink-soft);
+  border-radius:999px;padding:.45rem 1.1rem;font-size:.84rem;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:border-color .16s,color .16s;
+}
+.gate-ghost:hover{border-color:var(--p-rose);color:var(--p-rose-ink)}
+
+.toast{
+  position:fixed;bottom:1.4rem;left:50%;transform:translate(-50%,20px);
+  background:var(--navy);color:#fff;border-radius:999px;
+  padding:.6rem 1.5rem;font-size:.9rem;font-weight:600;z-index:200;
+  box-shadow:0 14px 34px rgba(18,43,69,.35);
+  opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:1000px){
+  .hub-hero{gap:1.4rem;padding:2.2rem 1.4rem}
+  .body-svg{max-width:430px}
+}
+@media (max-width:520px){
+  .body-svg{max-width:340px}
+  .hot .lbl{font-size:14px}
+}
+@media (max-width:640px){
+  .hub-hero{padding:1.7rem 1.1rem}
+  .modal-head{padding:1.3rem 1.2rem;gap:.8rem}
+  .modal-head h2{font-size:1.15rem}
+  .modal-body{padding:1.3rem 1.2rem 1.6rem}
+  .hub-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:640px){
+  .hero{padding:2.4rem 1.1rem 2.2rem}
+  .hero h1{font-size:1.85rem}
+  .page-head h1{font-size:1.55rem}
+  .lesson-head h1{font-size:1.5rem}
+  .lesson-row{flex-wrap:wrap}
+  .lesson-row .arrow{display:none}
+}
+
+/* ===================================================================
+   RESPONSIVE LAYER — tablets, phones, touch input
+   =================================================================== */
+
+/* ---- tablets / small laptops ---- */
+@media (max-width:900px){
+  main{padding:1.2rem 1rem 3rem}
+  .header-inner,nav.crumbs{padding:0 1rem}
+  .hero h1{font-size:2rem}
+  .hero p.lead{font-size:1.06rem}
+  .page-head,.lesson-head{padding:1.9rem 1.6rem}
+  .block{padding:1.5rem 1.5rem}
+  .info-strip{padding:1.7rem 1.6rem;gap:1.3rem}
+  .program-card{padding:1.9rem 1.6rem 1.7rem}
+  .modal{width:100%;max-height:92vh}
+}
+
+/* ---- phones ---- */
+@media (max-width:640px){
+  main{padding:1rem .85rem 2.6rem}
+  .header-inner{gap:.6rem;padding:0 .85rem}
+  .logo{font-size:1.08rem;gap:.5rem}
+  .logo small{display:none}
+  .logo-mark{width:40px;height:40px;border-radius:12px;font-size:1.2rem}
+  .header-spacer{display:none}
+  .a11y{margin-inline-start:auto}
+  .a11y span{display:none}
+  .a11y button{width:38px;height:38px}
+  .home-btn{padding:.4rem .9rem;font-size:.88rem}
+  nav.crumbs{margin-top:.85rem;padding:0 .85rem;font-size:.83rem;gap:.35rem}
+
+  .hero{padding:2rem .95rem 1.9rem;border-radius:20px}
+  .hero .eyebrow{font-size:.79rem;padding:.3rem .9rem}
+  .hero .trust span{font-size:.85rem;padding:.4rem .9rem}
+  .hub-hero{padding:1.6rem .9rem 1.4rem;border-radius:20px;gap:1.1rem}
+  .hub-sub{font-size:1rem}
+  .hub-chips span{font-size:.82rem;padding:.34rem .85rem}
+  .body-hint{font-size:.79rem;padding:.28rem .85rem}
+
+  .page-head,.lesson-head{padding:1.5rem 1.2rem;border-radius:18px}
+  .block{padding:1.3rem 1.1rem;border-radius:18px}
+  .block h2{font-size:1.15rem;gap:.5rem}
+  .block h2 .bicon{width:40px;height:40px;font-size:1.1rem}
+  .info-strip{padding:1.4rem 1.2rem;gap:1.2rem}
+  h2.section{font-size:1.25rem;margin:1.8rem 0 .35rem}
+
+  .program-card{padding:1.6rem 1.2rem 1.4rem;border-radius:18px}
+  .program-card h2{font-size:1.22rem}
+  .pc-icon{width:64px;height:64px;font-size:1.9rem}
+  .hub-card{padding:1.3rem 1.1rem 1.2rem}
+  .hub-card h3{font-size:1.08rem}
+  .roadmap,.hub-grid,.program-grid,.worksheets,.sub-grid{gap:.9rem}
+  .lesson-row{padding:1.1rem;gap:.85rem}
+  .lesson-badge{width:50px;height:50px;font-size:.82rem;border-radius:14px}
+  .lesson-row h3{font-size:1.06rem}
+  .month-nav a{padding:.55rem 1.1rem;font-size:.88rem}
+
+  .modal{max-height:94vh;border-radius:20px}
+  .modal-head{padding:1.1rem 1rem;gap:.7rem}
+  .modal-icon{width:48px;height:48px;font-size:1.4rem;border-radius:14px}
+  .modal-head h2{font-size:1.08rem}
+  .modal-head p{font-size:.82rem}
+  .modal-close{width:40px;height:40px}
+  .modal-body{padding:1.1rem 1rem 1.4rem}
+  .ws-head h3{font-size:1.1rem}
+  .dz{padding:1.5rem 1rem}
+  .dz-icon{width:58px;height:58px;font-size:1.6rem}
+  .dz h4{font-size:1rem}
+  .yt-add{padding:.9rem 1rem}
+  .yt-row input,.yt-btn{flex:1 1 100%}
+  .files-head{gap:.45rem}
+  .lib-gate,.lib-refresh{font-size:.76rem;padding:.3rem .8rem}
+
+  .v-bar{padding:.6rem .7rem;gap:.4rem}
+  .v-title{max-width:100%;flex:1 1 100%;font-size:.9rem;order:-1}
+  .v-btn{font-size:.8rem;padding:.42rem .9rem;flex:1}
+  .v-btn.close{flex:0 0 42px}
+  .v-body{padding:.6rem}
+  .v-body iframe{min-height:60vh}
+
+  .gate-box{padding:1.3rem 1.1rem;border-radius:20px}
+  .gate-box h3{font-size:1.15rem}
+  .gate-actions{gap:.45rem}
+  .gate-actions .big-cta{flex:1 1 100%;justify-content:center}
+  .gate-ghost{flex:1}
+}
+
+/* ---- very small phones ---- */
+@media (max-width:380px){
+  .hero h1{font-size:1.5rem}
+  .lib-grid{grid-template-columns:1fr}
+  .act{font-size:.75rem;min-width:0}
+}
+
+/* ---- landscape phones ---- */
+@media (max-height:520px) and (orientation:landscape){
+  .modal{max-height:96vh}
+  .v-body iframe{min-height:74vh}
+  .hub-hero{padding:1.2rem 1rem}
+}
+
+/* ---- touch devices: bigger targets, no sticky hover ---- */
+@media (hover:none){
+  .program-card:hover,.hub-card:hover,.month-card:hover,
+  .lib-item:hover,.ws-btn:hover,.sub-card:hover,
+  .lesson-row:hover,.month-nav a:hover{transform:none}
+  .act{padding:.5rem;font-size:.82rem}
+  .lib-actions{gap:.4rem}
+  .a11y button,.modal-close{min-width:44px;min-height:44px}
+  .lib-refresh,.lib-gate{padding:.45rem 1rem}
+  .file-actions{opacity:1}
+}
+
+/* ---- reduced motion ---- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;scroll-behavior:auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <a class="logo" href="#/" aria-label="חזרה לדף הבית">
+      <span class="logo-mark" aria-hidden="true">🧠</span>
+      <span>גוף האדם · STEM<small>מרחב בטוח ללמידה — פלטפורמה חינוכית</small></span>
+    </a>
+    <div class="header-spacer"></div>
+    <div class="a11y" role="group" aria-label="התאמת גודל טקסט">
+      <span>גודל טקסט</span>
+      <button type="button" onclick="setFont(-1)" aria-label="הקטנת טקסט">א-</button>
+      <button type="button" onclick="setFont(1)" aria-label="הגדלת טקסט">א+</button>
+    </div>
+    <a class="home-btn" href="#/">🏠 דף הבית</a>
+  </div>
+</header>
+
+<nav class="crumbs" id="crumbs" aria-label="ניווט משנה"></nav>
+
+<main id="app" aria-live="polite"></main>
+
+<footer class="site">
+  <div class="foot-logo">🧠 גוף האדם · STEM</div>
+  <p>מרחב בטוח ללמידה — פלטפורמה חינוכית לטיפול, לימוד, יצירה ומוגנות</p>
+  <p class="foot-note">התכנים מיועדים לאנשי מקצוע, צוותים חינוכיים והורים, ומומלץ ללמדם בליווי איש או אשת מקצוע. כל התוכניות בנויות ברוח של כבוד, הדרגתיות והתאמה אישית ללומדים.</p>
+</footer>
+
+<!-- Modal -->
+<div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+  <div class="modal" id="modal">
+    <div class="modal-head" id="modalHead">
+      <span class="modal-icon" id="modalIcon" aria-hidden="true">✦</span>
+      <span>
+        <h2 id="modalTitle">כותרת</h2>
+        <p id="modalSub"></p>
+      </span>
+      <button class="modal-close" type="button" id="modalClose" aria-label="סגירת החלון">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+<!-- File viewer -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewerTitle" hidden>
+  <div class="v-bar">
+    <span class="v-title" id="viewerTitle"></span>
+    <a class="v-btn" id="viewerOpen" href="#" target="_blank" rel="noopener">↗ פתיחה בלשונית חדשה</a>
+    <a class="v-btn primary" id="viewerDl" href="#" download>⬇ הורדה למחשב</a>
+    <button class="v-btn close" type="button" id="viewerClose" aria-label="סגירה">✕</button>
+  </div>
+  <div class="v-body" id="viewerBody"></div>
+</div>
+
+<!-- Team gate -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle" hidden>
+  <div class="gate-box">
+    <h3 id="gateTitle">🔐 כניסת צוות</h3>
+    <p class="gate-lead">הכניסה נדרשת רק כדי <strong>להוסיף או למחוק</strong> חומרים.
+    כל מי שנכנס לאתר רואה, פותח ומוריד את החומרים בלי שום סיסמה.</p>
+    <label class="gate-main">מפתח גישה
+      <input id="gToken" type="password" placeholder="הדביקו כאן את מפתח הגישה" autocomplete="off">
+    </label>
+    <p class="gate-note">המפתח נשמר רק בדפדפן של המחשב הזה, וההתחברות נשמרת גם אחרי סגירה.</p>
+    <details class="gate-adv" id="gSetup">
+      <summary>⚙ הגדרות מאגר · <span id="gRepoLbl">—</span></summary>
+      <p class="adv-note">נדרש פעם אחת בלבד להקמת האתר. אפשר גם למלא מראש בקובץ <code>index.html</code> בשורת <code>SITE_REPO</code>.</p>
+      <label>שם המשתמש ב-GitHub<input id="gOwner" type="text" placeholder="my-username" autocomplete="off"></label>
+      <label>שם המאגר (Repository)<input id="gName" type="text" placeholder="stem-site" autocomplete="off"></label>
+      <label>ענף (Branch)<input id="gBranch" type="text" value="main" autocomplete="off"></label>
+    </details>
+    <div class="gate-out" id="gOut"></div>
+    <div class="gate-actions">
+      <button class="big-cta" type="button" id="gSave">שמירה והתחברות</button>
+      <button class="gate-ghost" type="button" id="gLogout">יציאה ממצב עריכה</button>
+      <button class="gate-ghost" type="button" id="gCancel">ביטול</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="hiddenFile" multiple hidden
+       accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt">
+
+<script>
+/* ===================== DATA ===================== */
+const PROGRAMS = {};
+
+PROGRAMS.a = {
+  id:'a', cls:'', icon:'🌷',
+  tag:'תוכנית שנתית · מבוגרים',
+  title:'חינוך חברתי-מיני למבוגרים עם מוגבלות שכלית התפתחותית ברמה בינונית עד קשה',
+  short:'תוכנית שנתית מובנית המקנה ידע, מיומנויות וביטחון בתחום החברתי-מיני, בגובה העיניים ובקצב מותאם.',
+  desc:[
+    'התוכנית מלווה את הלומדים והלומדות לאורך שנה שלמה, צעד אחר צעד: מהיכרות עם הגוף ועם רגשות, דרך פרטיות, מגע וקשרים בין-אישיים, ועד הסכמה, זוגיות ופנייה לעזרה.',
+    'כל השיעורים בנויים בשפה פשוטה וברורה, עם חזרות מרובות, המחשה חזותית ותרגול מעשי. התכנים מותאמים לליווי של אנשי מקצוע וצוותי מסגרות דיור ותעסוקה.'
+  ],
+  principles:['שפה פשוטה וברורה','למידה בקצב אישי','כבוד ופרטיות','חזרה ותרגול','שיתוף הצוות והמשפחה'],
+  months:[
+    {title:'הגוף שלי', desc:'היכרות מכבדת עם הגוף ושמות נכונים לאיברי הגוף.', lessons:[
+      {title:'מכירים את הגוף שלנו', summary:'שיעור פתיחה נעים: כל אחד ואחת לומדים שהגוף שלהם שייך להם. נכיר את חלקי הגוף המרכזיים דרך תמונות, שירים ותנועה.', goals:['זיהוי חלקי גוף מרכזיים','חיזוק המסר "הגוף שלי שייך לי"'], worksheets:['לוח תמונות — חלקי הגוף','דף צביעה — הגוף שלי']},
+      {title:'שמות נכונים לאיברים פרטיים', summary:'לומדים לקרוא לאיברים הפרטיים בשמם הנכון, בלי בושה. שימוש בשמות נכונים עוזר לשמור על עצמנו ולבקש עזרה.', goals:['שימוש בשמות נכונים ומכבדים','הפחתת בושה סביב הנושא'], worksheets:['כרטיסי מילים — שמות האיברים','דף התאמה — תמונה ומילה']},
+      {title:'הגוף שלי משתנה', summary:'שיחה פשוטה על כך שהגוף של כל אדם שונה ומשתנה עם הגיל, ושכל גוף ראוי לכבוד.', goals:['קבלת שונות בין גופים','הבנה שגוף משתנה זה טבעי'], worksheets:['דף עבודה — כל גוף הוא בסדר']}
+    ]},
+    {title:'פרטיות', desc:'מה זה פרטי? מקומות פרטיים, זמנים פרטיים והתנהגות פרטית.', lessons:[
+      {title:'מקומות פרטיים ומקומות ציבוריים', summary:'לומדים להבחין בין מקום פרטי (חדר שינה, שירותים, מקלחת) לבין מקום ציבורי, בעזרת תמונות ומיון משותף.', goals:['הבחנה בין פרטי לציבורי','זיהוי מקומות פרטיים בבית ובמסגרת'], worksheets:['משחק מיון — פרטי או ציבורי?','תמונות סביבה — הבית שלי']},
+      {title:'דברים שעושים רק בפרטיות', summary:'אילו פעולות שייכות רק למקום פרטי — התלבשות, רחצה, נגיעה בגוף — ולמה חשוב לסגור דלת.', goals:['התאמת התנהגות למקום','הרגלי פרטיות יומיומיים'], worksheets:['דף עבודה — איפה עושים את זה?','תזכורת חזותית — סוגרים דלת']},
+      {title:'הפרטיות של אחרים', summary:'גם לאנשים אחרים יש פרטיות: דופקים בדלת, לא נכנסים למקלחת של מישהו אחר, ולא נוגעים בחפצים פרטיים בלי רשות.', goals:['כיבוד פרטיות של הזולת','תרגול "לדפוק בדלת ולחכות"'], worksheets:['תרחישים מצוירים — מכבדים פרטיות']}
+    ]},
+    {title:'רגשות', desc:'זיהוי רגשות בסיסיים, הבעתם בדרך מקובלת ובקשת עזרה כשקשה.', lessons:[
+      {title:'איך אני מרגיש היום?', summary:'מכירים ארבעה רגשות בסיסיים — שמחה, עצב, כעס ופחד — דרך פרצופים, מראה ומשחק תפקידים.', goals:['זיהוי רגשות אצל עצמי','שיום רגשות במילים או בסמלים'], worksheets:['לוח רגשות יומי','כרטיסי פרצופים — רגשות']},
+      {title:'מה הגוף מספר לי?', summary:'לומדים להקשיב לתחושות הגוף: לב דופק, בטן מתהפכת, ידיים רועדות — ומה הן מלמדות אותנו על הרגש.', goals:['חיבור בין תחושת גוף לרגש','זיהוי סימני מצוקה מוקדמים'], worksheets:['דף עבודה — הגוף שלי מדבר']},
+      {title:'מה עושים עם רגש חזק?', summary:'דרכים בטוחות להירגע ולהביע רגש: לנשום עמוק, לבקש הפסקה, לספר לאיש צוות. מתרגלים יחד.', goals:['רכישת דרכי הרגעה פשוטות','פנייה לעזרה כשמרגישים רע'], worksheets:['כרטיס כיס — מה עוזר לי להירגע','דף תרגול — נשימות']}
+    ]},
+    {title:'מרחב אישי ומגע', desc:'סוגי מגע, מרחב אישי, ומי מותר לו לגעת בי ומתי.', lessons:[
+      {title:'המרחב האישי שלי', summary:'לכל אדם יש "בועה" של מרחב אישי. מתרגלים לשמור מרחק נעים ולבקש רשות לפני שמתקרבים.', goals:['שמירה על מרחב אישי','בקשת רשות לפני מגע'], worksheets:['תרגיל הבועה — מרחב אישי','דף עבודה — קרוב או רחוק?']},
+      {title:'מגע נעים ומגע לא נעים', summary:'מבחינים בין מגע נעים ובטוח לבין מגע שכואב, מפחיד או לא נעים — ולומדים שלכל אחד מותר להגיד "לא נעים לי".', goals:['הבחנה בין סוגי מגע','לגיטימציה לסירוב למגע'], worksheets:['משחק מיון — נעים או לא נעים?','כרטיס — מותר לי להגיד לא']},
+      {title:'מי מותר לו לגעת בי?', summary:'מעגלי מגע: מה מתאים עם בני משפחה, חברים, אנשי צוות, רופאים וזרים. אף אחד לא נוגע באיברים הפרטיים בלי סיבה רפואית וליווי מתאים.', goals:['התאמת מגע לסוג הקשר','זיהוי מגע אסור'], worksheets:['לוח מעגלי מגע','תרחישים — מתאים או לא מתאים?']}
+    ]},
+    {title:'מעגלי קשר', desc:'משפחה, חברים, אנשי צוות וזרים — לכל קשר יש כללים משלו.', lessons:[
+      {title:'האנשים בחיים שלי', summary:'ממפים יחד את האנשים הקרובים: משפחה, חברים, צוות. כל אחד בונה את "מעגלי הקשר" האישיים שלו.', goals:['מיפוי אנשים משמעותיים','הבחנה בין דרגות קרבה'], worksheets:['לוח מעגלי הקשר שלי','מדבקות דמויות למיון']},
+      {title:'איך מתנהגים עם כל אחד?', summary:'חיבוק למי? לחיצת יד למי? נפנוף לזר? מתאימים ברכות והתנהגויות לכל מעגל קשר דרך משחק תפקידים.', goals:['התאמת התנהגות לסוג קשר','תרגול ברכות מקובלות'], worksheets:['דף התאמה — ברכה לכל אדם']},
+      {title:'אנשים זרים', summary:'מיהו אדם זר, איך מתנהגים בנימוס אך בזהירות, ומה עושים כשזר מבקש משהו לא מתאים.', goals:['זיהוי מצבים לא בטוחים עם זרים','תרגול תגובה: לא, ללכת, לספר'], worksheets:['תרחישים מצוירים — אדם זר','כרטיס כיס — לא, הולכים, מספרים']}
+    ]},
+    {title:'חברות', desc:'איך יוצרים חברות, שומרים עליה ופותרים חילוקי דעות.', lessons:[
+      {title:'מה זה חבר טוב?', summary:'מאפיינים של חברות טובה: מקשיבים, משתפים, נעים ביחד. מזהים חברויות קיימות ומה טוב בהן.', goals:['זיהוי מאפייני חברות טובה','הערכת קשרים קיימים'], worksheets:['דף עבודה — חבר טוב הוא...','תמונות מיון — חברות טובה']},
+      {title:'איך מתחילים שיחה?', summary:'מתרגלים צעדים פשוטים ליצירת קשר: להתקרב, לחייך, להגיד שלום, לשאול שאלה. תרגול בזוגות.', goals:['רכישת פתיחי שיחה','תרגול יזימת קשר'], worksheets:['כרטיסי פתיחי שיחה','דף תרגול — שיחה ראשונה']},
+      {title:'כשיש ריב או עלבון', summary:'גם בין חברים יש מריבות. לומדים לומר "נפגעתי", לבקש סליחה ולבקש עזרה מהצוות כשצריך.', goals:['ביטוי פגיעה במילים','דרכים לפיוס ולבקשת עזרה'], worksheets:['תרחישים — מה עושים כשרבים?']}
+    ]},
+    {title:'זוגיות ואהבה', desc:'רגשות רומנטיים, זוגיות מכבדת והבדל בין חברות לזוגיות.', lessons:[
+      {title:'חברות או זוגיות?', summary:'מה ההבדל בין חבר לבין בן/בת זוג? מדברים על רגשות רומנטיים בצורה פתוחה ומכבדת.', goals:['הבחנה בין סוגי קשר','נרמול רגשות רומנטיים'], worksheets:['דף מיון — חברות או זוגיות?']},
+      {title:'זוגיות טובה ומכבדת', summary:'בזוגיות טובה שני הצדדים רוצים, מכבדים ונהנים. מזהים סימנים של קשר טוב וקשר שאינו טוב.', goals:['זיהוי מאפייני קשר מכבד','זיהוי סימני אזהרה בקשר'], worksheets:['לוח — קשר טוב נראה כך','תרחישים — טוב לי או לא טוב לי?']},
+      {title:'להביע חיבה בדרך מתאימה', summary:'איך מראים למישהו שהוא מוצא חן בעינינו בדרך מכבדת — ומה עושים אם הצד השני לא מעוניין.', goals:['ביטוי חיבה מקובל','קבלת סירוב בכבוד'], worksheets:['כרטיסי מצבים — הבעת חיבה']}
+    ]},
+    {title:'הסכמה ואמירת לא', desc:'הזכות להגיד לא, לשאול לפני, ולכבד את ה"לא" של האחר.', lessons:[
+      {title:'מותר לי להגיד לא', summary:'לכל אדם יש זכות לסרב למגע או לבקשה שלא נעימה לו — גם לאדם מוכר וגם לאיש צוות. מתרגלים אמירת "לא" ברורה.', goals:['חיזוק היכולת לסרב','אמירת לא בגוף ובקול'], worksheets:['תרגול — אני אומר/ת לא','כרטיס כיס — הזכויות שלי']},
+      {title:'שואלים לפני', summary:'לפני שנוגעים, מחבקים או לוקחים — שואלים. מתרגלים לבקש רשות ולחכות לתשובה.', goals:['הטמעת הרגל בקשת רשות','המתנה לתשובה וכיבודה'], worksheets:['דף תרגול — קודם שואלים']},
+      {title:'כשמישהו אומר לי לא', summary:'"לא" של מישהו אחר הוא סופי. לומדים לקבל סירוב בלי לכעוס על האדם, ומה אפשר לעשות עם האכזבה.', goals:['כיבוד סירוב של הזולת','ויסות אכזבה'], worksheets:['תרחישים — הוא אמר לא, מה עכשיו?']}
+    ]},
+    {title:'היגיינה וטיפוח', desc:'שמירה על הגוף: רחצה, לבוש מתאים והתנהלות עצמאית ומכבדת.', lessons:[
+      {title:'שומרים על גוף נקי', summary:'סדר פעולות הרחצה וההיגיינה היומית, עם דגש על עצמאות ועל פרטיות בזמן הרחצה.', goals:['רצף רחצה עצמאי','שמירת פרטיות ברחצה'], worksheets:['לוח רצף — סדר הרחצה','טבלת מעקב שבועית']},
+      {title:'לבוש מתאים לכל מקום', summary:'מה לובשים בבית, בעבודה, בבריכה? מתאימים בגדים למקום, למזג האוויר ולמצב.', goals:['התאמת לבוש למצב','הבנת לבוש כחלק מפרטיות'], worksheets:['משחק הלבשה — מה מתאים?']},
+      {title:'טיפוח והרגשה טובה', summary:'טיפוח עצמי — הסתרקות, בגדים נקיים, ריח טוב — עוזר לנו להרגיש טוב ולהתקבל בחברה.', goals:['חיזוק מוטיבציה לטיפוח','קשר בין טיפוח לביטחון עצמי'], worksheets:['דף עבודה — אני מטפח/ת את עצמי']}
+    ]},
+    {title:'בטיחות בקהילה וברשת', desc:'התנהלות בטוחה במרחב הציבורי, בטלפון וברשתות החברתיות.', lessons:[
+      {title:'בטוחים בחוץ', summary:'כללי התנהגות בטוחה ברחוב, בתחבורה ובמקומות ציבוריים: ליד מי יושבים, למי פונים כשצריך עזרה.', goals:['זיהוי דמויות עוזרות בקהילה','כללי בטיחות במרחב ציבורי'], worksheets:['תמונות — למי פונים לעזרה?','תרחישים — ברחוב ובאוטובוס']},
+      {title:'הטלפון והרשת שלי', summary:'מה משתפים ומה לא: תמונות פרטיות לא שולחים, פרטים אישיים לא מוסרים, ועם זרים ברשת נזהרים.', goals:['כללי שיתוף בטוחים','זהירות מפני זרים ברשת'], worksheets:['כרטיס כללי רשת בטוחה','משחק מיון — לשלוח או לא לשלוח?']},
+      {title:'כשמשהו ברשת מרגיש לא טוב', summary:'קיבלתי הודעה מוזרה? מישהו ביקש תמונה? עוצרים, לא עונים, ומראים לאיש צוות או לבן משפחה.', goals:['זיהוי פנייה פוגענית ברשת','תרגול: עוצרים ומספרים'], worksheets:['דף תרחישים — הודעות ברשת']}
+    ]},
+    {title:'פנייה לעזרה', desc:'זיהוי מצבי מצוקה, האנשים שאפשר לפנות אליהם ואיך מספרים.', lessons:[
+      {title:'רשת הביטחון שלי', summary:'כל אחד בונה רשימה של אנשים שסומכים עליהם: איש צוות, בן משפחה, חבר. אלה האנשים שמספרים להם.', goals:['בניית רשת ביטחון אישית','שינון דרכי פנייה'], worksheets:['לוח — האנשים שלי','כרטיס כיס — למי אני פונה']},
+      {title:'מתי חייבים לספר?', summary:'כשמישהו נוגע בלי רשות, מפחיד, מבקש לשמור סוד על מגע — תמיד מספרים, גם אם ביקשו לא לספר.', goals:['זיהוי מצבים שחובה לדווח','הבנה שסוד על פגיעה תמיד מספרים'], worksheets:['תרחישים — לספר או לא?','כרטיס — סוד כזה תמיד מספרים']},
+      {title:'איך מספרים?', summary:'מתרגלים לספר: לגשת לאדם מהרשת, להגיד "קרה לי משהו", ולהראות או להסביר. מי שסיפר עשה מעשה נכון וטוב.', goals:['תרגול מעשי של דיווח','חיזוק: המספר אינו אשם'], worksheets:['דף תרגול — כך מספרים']}
+    ]},
+    {title:'מסכמים שנה', desc:'חזרה על כל הנושאים, חגיגת ההתקדמות ותעודות סיום.', lessons:[
+      {title:'חוזרים על מה שלמדנו', summary:'מסע חזרה בתחנות: הגוף, פרטיות, מגע, הסכמה, עזרה. משחקים ונזכרים בכל מה שרכשנו השנה.', goals:['רענון מסרים מרכזיים','הערכת ידע בדרך חווייתית'], worksheets:['משחק תחנות — חידון שנתי','לוח בינגו — המושגים שלנו']},
+      {title:'מה אני יודע/ת עכשיו', summary:'כל משתתף/ת משתפים בדבר אחד חשוב שלמדו. הצוות משקף לכל אחד את ההתקדמות האישית שלו.', goals:['חיזוק תחושת מסוגלות','שיקוף התקדמות אישית'], worksheets:['דף אישי — למדתי ש...']},
+      {title:'מסיבת סיום ותעודות', summary:'חוגגים את סיום השנה: חלוקת תעודות, תמונות ומילות הערכה. סיום מעצים שמחזק את הביטחון.', goals:['חוויית הצלחה מסכמת','חיזוק שייכות וגאווה'], worksheets:['תעודת סיום להדפסה','הזמנה למסיבת סיום']}
+    ]}
+  ]
+};
+PROGRAMS.b = {
+  id:'b', cls:'b', icon:'🧸',
+  tag:'תוכנית שנתית · ילדים צעירים',
+  title:'חינוך לבטיחות אישית וגבולות לילדים צעירים',
+  short:'תוכנית שנתית לגיל הרך ולכיתות הצעירות: הגוף שלי שייך לי, מותר להגיד לא, ותמיד יש למי לספר.',
+  desc:[
+    'התוכנית מקנה לילדים ולילדות, בשפה חמה ולא מפחידה, את עקרונות הבטיחות האישית: היכרות עם הגוף, זיהוי מגע נעים ולא נעים, ההבדל בין סוד טוב לסוד רע, ובניית רשת מבוגרים שאפשר לסמוך עליהם.',
+    'הלמידה נעשית דרך סיפורים, שירים, בובות ומשחק — עם מסרים קצרים שחוזרים לאורך כל השנה. התוכנית מיועדת לגננות, מורים והורים.'
+  ],
+  principles:['שפה חמה ולא מפחידה','למידה דרך משחק וסיפור','מסרים קצרים וחוזרים','שיתוף ההורים','חיזוק ולא הפחדה'],
+  months:[
+    {title:'הגוף שלי שייך לי', desc:'שיעורי פתיחה: הגוף שלי הוא שלי ואני מיוחד/ת.', lessons:[
+      {title:'אני והגוף שלי', summary:'פותחים בשיר ובמשחק תנועה: לכל אחד יש גוף משלו, והגוף שלי שייך רק לי. מסר פשוט שילווה אותנו כל השנה.', goals:['היכרות חיובית עם הגוף','הפנמת המסר "הגוף שלי שלי"'], worksheets:['דף צביעה — הגוף שלי שלי','שיר מלווה להדפסה']},
+      {title:'כל גוף הוא מיוחד', summary:'גבוה, נמוך, מתולתל, חלק — כל הגופים שונים וכולם נהדרים. פעילות מראה ומחמאות.', goals:['קבלה עצמית','כבוד לשונות'], worksheets:['דף עבודה — אני מיוחד/ת כי...']},
+      {title:'הגוף שלי יודע דברים', summary:'הגוף שלנו עוזר לנו: רגליים רצות, ידיים מחבקות, בטן מרגישה. מתחילים להקשיב לגוף.', goals:['הקשבה ראשונית לגוף','אוצר מילים גופני'], worksheets:['משחק — מה הגוף שלי יודע?']}
+    ]},
+    {title:'שמות לכל חלקי הגוף', desc:'קוראים לכל חלקי הגוף, כולל האיברים הפרטיים, בשמם הנכון.', lessons:[
+      {title:'משחק שמות הגוף', summary:'שרים ומשחקים עם שמות חלקי הגוף. גם לאיברים הפרטיים יש שם נכון — וזה בסדר גמור להגיד אותו.', goals:['שיום נכון של חלקי גוף','נרמול דיבור על הגוף'], worksheets:['לוח תמונות — חלקי הגוף','כרטיסי זיכרון — שמות הגוף']},
+      {title:'למה חשוב לדעת את השמות?', summary:'כשיודעים להגיד איפה כואב או איפה נגעו — המבוגרים יכולים לעזור. שמות נכונים שומרים עלינו.', goals:['הבנת חשיבות השיום','חיזוק תקשורת עם מבוגרים'], worksheets:['דף עבודה — אני יודע/ת להגיד']}
+    ]},
+    {title:'מקומות פרטיים', desc:'האיברים הפרטיים והמקומות הפרטיים — מה מכוסה בבגד ים.', lessons:[
+      {title:'כלל בגד הים', summary:'המקומות שבגד הים מכסה הם פרטיים. אף אחד לא נוגע שם, ואנחנו לא נוגעים אצל אחרים.', goals:['זיהוי איברים פרטיים','הכרת כלל בגד הים'], worksheets:['דף צביעה — כלל בגד הים','פוסטר לכיתה — כלל בגד הים']},
+      {title:'מתי מותר בכל זאת?', summary:'לפעמים אמא, אבא או רופא עוזרים לנו ברחצה או בבדיקה — וזה בסדר כשזה בשביל לשמור על הבריאות שלנו, ואף פעם לא סוד.', goals:['הבחנת מצבים מותרים','הבנה: טיפול רפואי אינו סוד'], worksheets:['תרחישים מצוירים — מותר או אסור?']},
+      {title:'פרטיות בבית ובגן', summary:'בשירותים סוגרים דלת, מתלבשים במקום פרטי, ודופקים לפני שנכנסים. מתרגלים הרגלי פרטיות.', goals:['הרגלי פרטיות יומיומיים','כיבוד פרטיות של אחרים'], worksheets:['דף מיון — פרטי או לא פרטי?']}
+    ]},
+    {title:'מגע נעים ולא נעים', desc:'הגוף מרגיש: מגע נעים, מגע לא נעים, ומה עושים עם כל אחד.', lessons:[
+      {title:'איזה מגע נעים לי?', summary:'חיבוק מאמא, כיף עם חבר — יש מגע שנעים. וכל אחד מרגיש אחרת: מה שנעים לחבר לא חייב להיות נעים לי.', goals:['זיהוי מגע נעים','הבנה שתחושות שונות בין אנשים'], worksheets:['דף מיון — נעים או לא נעים?']},
+      {title:'מגע שלא נעים לי', summary:'מגע שכואב, מפחיד או פשוט לא מתחשק — הוא לא בסדר, גם אם הוא מאדם מוכר. מותר להגיד "די" ולזוז.', goals:['לגיטימציה לסירוב למגע','זיהוי מגע לא רצוי'], worksheets:['כרטיס — מותר לי להגיד די','תרחישים — מה אני מרגיש/ה?']},
+      {title:'הבטן מספרת לי', summary:'לפעמים הבטן "מתהפכת" או הלב דופק חזק — זה הגוף שאומר שמשהו לא בסדר. לתחושה הזו מקשיבים ומספרים למבוגר.', goals:['זיהוי תחושת "אזעקה" פנימית','חיבור תחושה ← פנייה למבוגר'], worksheets:['דף עבודה — סימני הגוף שלי']}
+    ]},
+    {title:'מותר להגיד לא', desc:'תרגול אמירת "לא" ברורה — גם למבוגרים וגם לילדים.', lessons:[
+      {title:'לא! בקול גדול', summary:'מתרגלים להגיד "לא" חזק וברור עם כל הגוף: עומדים זקוף, מסתכלים ואומרים. משחק תפקידים כיפי.', goals:['אמירת לא ברורה','ביטחון בעמידה על שלי'], worksheets:['שיר — אני אומר/ת לא!','כרטיסי תרגול — מצבים']},
+      {title:'למי מותר להגיד לא?', summary:'לכולם! גם לילד גדול, גם לדוד, גם למבוגר — כשמשהו בגוף שלי לא נעים לי, מותר לי לסרב.', goals:['הבנה שסירוב מותר כלפי כל אדם','הסרת מורא ממבוגרים בהקשר של הגוף'], worksheets:['תרחישים מצוירים — מותר להגיד לא']},
+      {title:'גם לחבר שלי מותר', summary:'כשחבר אומר לי "לא" או "די" — עוצרים מיד. לומדים לכבד את הגבולות של אחרים.', goals:['כיבוד סירוב של אחרים','עצירה מיידית ב"די"'], worksheets:['משחק — עצור וסע ברשות']}
+    ]},
+    {title:'סודות טובים וסודות רעים', desc:'ההבדל בין הפתעה משמחת לסוד שגורם הרגשה רעה.', lessons:[
+      {title:'הפתעה או סוד רע?', summary:'הפתעת יום הולדת היא סוד טוב — קצר ומשמח. סוד שגורם בטן כואבת, פחד או בלבול הוא סוד רע.', goals:['הבחנה בין סוד טוב לרע','זיהוי תחושות סביב סוד'], worksheets:['דף מיון — סוד טוב או רע?','סיפור מלווה — הסוד של יובל']},
+      {title:'סוד על הגוף — תמיד מספרים', summary:'אם מישהו נוגע ואומר "אל תספר" — זה בדיוק הסוד שכן מספרים, מיד, למבוגר שסומכים עליו. ומי שמספר הוא גיבור.', goals:['כלל ברזל: סוד על מגע מספרים','חיזוק: המספר עושה מעשה טוב'], worksheets:['פוסטר — סוד כזה מספרים!','כרטיס לילד — אני מספר/ת']}
+    ]},
+    {title:'המבוגרים שלי', desc:'בונים רשת ביטחון: חמישה מבוגרים שאפשר לספר להם הכל.', lessons:[
+      {title:'כף היד שלי — חמישה אנשים', summary:'כל ילד מצייר את כף ידו ובוחר חמישה מבוגרים שסומך עליהם — אחד לכל אצבע. זו רשת הביטחון שלי.', goals:['בניית רשת ביטחון אישית','זיהוי מבוגרים מיטיבים'], worksheets:['דף יצירה — כף היד שלי','מכתב להורים — רשת הביטחון']},
+      {title:'מספרים עד שמקשיבים', summary:'אם סיפרתי ולא הקשיבו — מספרים לעוד מישהו מהרשימה, ולא מפסיקים עד שמישהו עוזר.', goals:['התמדה בדיווח','הבנה שתמיד יש עוד כתובת'], worksheets:['סיפור — דנה סיפרה שוב']},
+      {title:'מי עוזר לנו בקהילה?', summary:'מכירים דמויות עוזרות: גננת, מורה, שוטר, אחות. אנשים שתפקידם לשמור עלינו.', goals:['הכרת דמויות מסייעות','חיזוק אמון במבוגרים מיטיבים'], worksheets:['משחק התאמה — מי עוזר במה?']}
+    ]},
+    {title:'אנשים מוכרים וזרים', desc:'התנהלות נבונה עם אנשים שאנחנו לא מכירים — בלי הפחדה.', lessons:[
+      {title:'מי זה זר?', summary:'זר הוא מישהו שאנחנו לא מכירים — רוב הזרים נחמדים, אבל עם זרים יש כללים: לא הולכים, לא לוקחים, שואלים את ההורה.', goals:['הגדרת "זר" בלי הפחדה','הכרת כללי הזהב עם זרים'], worksheets:['כללי הזהב — פוסטר','תרחישים — מה עושים?']},
+      {title:'גם מוכר צריך לשאול', summary:'גם כשמישהו מוכר מציע טרמפ או ממתק — קודם שואלים את אבא או אמא. הכלל תמיד: שואלים לפני.', goals:['הרגל "שואלים את ההורה"','הבנה שהכלל חל גם על מוכרים'], worksheets:['דף עבודה — קודם שואלים']},
+      {title:'הלכתי לאיבוד — מה עושים?', summary:'נשארים במקום, קוראים בשם ההורה, פונים לאמא עם ילדים או לאיש בתפקיד. מתרגלים בעמדות משחק.', goals:['תוכנית פעולה כשהולכים לאיבוד','שינון פרטים מזהים'], worksheets:['כרטיס — אם הלכתי לאיבוד','תרגול — השם והטלפון שלי']}
+    ]},
+    {title:'רגשות ותחושות', desc:'מזהים רגשות, קוראים להם בשם ומספרים עליהם.', lessons:[
+      {title:'יש לי רגשות', summary:'שמחה, עצב, כעס, פחד — לכולנו יש רגשות וכולם בסדר. מזהים רגשות בפרצופים ובסיפורים.', goals:['זיהוי ושיום רגשות','נרמול כל הרגשות'], worksheets:['לוח רגשות לגן','כרטיסי פרצופים']},
+      {title:'מה עושים עם רגש גדול?', summary:'כשהכעס או הפחד גדולים — נושמים כמו בלון, מבקשים חיבוק, מספרים למבוגר. מתרגלים יחד.', goals:['דרכי הרגעה מותאמות גיל','פנייה למבוגר כשקשה'], worksheets:['תרגיל הבלון — נשימות','דף — מה עוזר לי?']},
+      {title:'מספרים איך מרגישים', summary:'"אני עצוב כי...", "פחדתי כש..." — מתרגלים לספר על רגשות במילים. מי שמספר, עוזרים לו.', goals:['ביטוי רגשות במילים','חיזוק שיח רגשי פתוח'], worksheets:['משפטי פתיחה — אני מרגיש/ה']}
+    ]},
+    {title:'בטוחים בגן ובבית הספר', desc:'גבולות וכבוד הדדי בין ילדים: ידיים שלי, מילים טובות.', lessons:[
+      {title:'ידיים רק לעצמי', summary:'לא מרביצים, לא דוחפים, לא מושכים — הידיים שלנו לחיבוק בהסכמה ולמשחק בכיף. פותרים בעיות במילים.', goals:['הפחתת מגע פוגעני','פתרון קונפליקטים במילים'], worksheets:['פוסטר — ידיים טובות','תרחישים — מה אפשר להגיד?']},
+      {title:'משחקים בהסכמה', summary:'לפני משחק מגע — שואלים. באמצע — אם מישהו אומר "די", עוצרים. גם במשחק יש גבולות.', goals:['בקשת הסכמה במשחק','עצירה ב"די" גם באמצע'], worksheets:['משחק — שואלים ומשחקים']},
+      {title:'כשמציקים לי או לחבר', summary:'מה עושים כשמציקים: אומרים "די" חזק, מתרחקים, מספרים למבוגר. וגם — איך עוזרים לחבר שמציקים לו.', goals:['תגובה מדורגת להצקה','אומץ לעזור לאחר'], worksheets:['כרטיס — די, זז/ה, מספר/ת','סיפור — החבר האמיץ']}
+    ]},
+    {title:'בטוחים במסך', desc:'צעדים ראשונים בבטיחות דיגיטלית לגיל הרך.', lessons:[
+      {title:'המסך בזמן ובמקום', summary:'מתי צופים ומשחקים, וכמה — ההורים קובעים יחד איתנו. מסך זה כיף כשהוא במידה.', goals:['הרגלי מסך מאוזנים','שיתוף פעולה עם כללי הבית'], worksheets:['לוח כללי מסך משפחתי']},
+      {title:'לא כל מה שבמסך מתאים לי', summary:'אם מופיע משהו מפחיד, מוזר או לא נעים במסך — סוגרים או הופכים את המסך וקוראים למבוגר. לא אשמים ולא נענשים.', goals:['תגובה לתוכן לא מתאים','פנייה מיידית למבוגר'], worksheets:['כרטיס — ראיתי משהו מוזר','פוסטר — סוגרים וקוראים']},
+      {title:'לא מדברים עם זרים ברשת', summary:'גם במשחקים ברשת יש אנשים שלא מכירים. לא מוסרים שם, כתובת או תמונה — ומספרים להורה על כל פנייה.', goals:['כללי זהירות בסיסיים ברשת','דיווח על פניות של זרים'], worksheets:['כללי רשת לקטנטנים — פוסטר']}
+    ]},
+    {title:'אני יודע/ת לשמור על עצמי', desc:'חודש סיכום: חוזרים על כל הכללים וחוגגים.', lessons:[
+      {title:'מסע הגיבורים — חזרה גדולה', summary:'עוברים בתחנות משחק על כל מה שלמדנו: כלל בגד הים, להגיד לא, סודות, רשת הביטחון. כל תחנה — מדבקה!', goals:['רענון כל מסרי השנה','הערכה חווייתית של הידע'], worksheets:['ערכת תחנות — מסע הגיבורים','דף מדבקות מעקב']},
+      {title:'אני שומר/ת על עצמי!', summary:'כל ילד משתף כלל אחד שהוא זוכר. מצלמים, מציירים ומכינים ספר כיתתי של "כללי הזהב שלנו".', goals:['ביטוי אישי של הנלמד','גיבוש ספר כללים כיתתי'], worksheets:['דף לספר הכיתתי — הכלל שלי']},
+      {title:'מסיבת סיום עם ההורים', summary:'ההורים מוזמנים: הילדים מציגים את השירים והכללים, ומקבלים תעודת "שומר/ת על עצמי". ההורים מקבלים דף המשך לבית.', goals:['שיתוף ההורים במסרים','חוויית סיום מעצימה'], worksheets:['תעודה — שומר/ת על עצמי','דף להורים — ממשיכים בבית']}
+    ]}
+  ]
+};
+
+/* ===================== RENDER ===================== */
+const app = document.getElementById('app');
+const crumbs = document.getElementById('crumbs');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* text size control */
+let fsIndex = 1;
+const FS = [16,18,20,22];
+function setFont(d){
+  fsIndex = Math.min(FS.length-1, Math.max(0, fsIndex+d));
+  document.documentElement.style.setProperty('--fs', FS[fsIndex]+'px');
+}
+
+function setCrumbs(items){
+  crumbs.innerHTML = items.map((it,i)=>{
+    const last = i===items.length-1;
+    return last ? `<span aria-current="page"><strong>${esc(it.label)}</strong></span>`
+                : `<a href="${it.href}">${esc(it.label)}</a><span class="sep">‹</span>`;
+  }).join('');
+}
+
+/* ---------- pages ---------- */
+function renderHome(){
+  setCrumbs([{label:'דף הבית',href:'#/'},{label:'חינוך חברתי מיני ומוגנות'}]);
+  document.title = 'חינוך חברתי מיני ומוגנות — מרחב בטוח ללמידה';
+  app.innerHTML = `
+    <section class="hero">
+      <span class="eyebrow">✦ חינוך חברתי מיני ומוגנות</span>
+      <h1>מרחב בטוח ללמידה,<br>מקום בטוח <em>לגדול</em> בו</h1>
+      <p class="lead">שתי תוכניות שנתיות מובנות לחינוך חברתי-מיני ולבטיחות אישית — שיעור אחר שיעור,
+      עם סרטוני למידה, דפי עבודה ומערכי הדרכה ברורים לאנשי מקצוע, לצוותים ולהורים.</p>
+      <div class="trust">
+        <span>📅 תוכנית שנתית מלאה — 12 חודשים</span>
+        <span>🎬 סרטון למידה בכל שיעור</span>
+        <span>📄 דפי עבודה מוכנים להורדה</span>
+        <span>🤝 בשפה מכבדת ובגובה העיניים</span>
+      </div>
+    </section>
+    <div class="program-grid">
+      ${['a','b'].map(k=>{const p=PROGRAMS[k];return `
+      <a class="program-card ${p.cls}" href="#/program/${p.id}">
+        <span class="pc-icon" aria-hidden="true">${p.icon}</span>
+        <span class="pc-tag">${esc(p.tag)}</span>
+        <h2>${esc(p.title)}</h2>
+        <p>${esc(p.short)}</p>
+        <span class="pc-cta">לצפייה בתוכנית ובמפת הדרכים השנתית ←</span>
+      </a>`;}).join('')}
+    </div>
+    <div class="info-strip">
+      <div><h3><span class="num" aria-hidden="true">🧭</span> מסלול שנתי ברור</h3><p>כל תוכנית בנויה כמפת דרכים של 12 חודשים, מהבסיס ועד הסיכום — פשוט מתקדמים חודש אחר חודש, שיעור אחר שיעור.</p></div>
+      <div><h3><span class="num" aria-hidden="true">🤝</span> למידה בגובה העיניים</h3><p>שפה פשוטה, חזרתיות מכוונת והמחשה חזותית — למידה מכבדת שמותאמת לקצב ולצרכים של כל לומד ולומדת.</p></div>
+      <div><h3><span class="num" aria-hidden="true">👩‍🏫</span> מוכן לשימוש מיידי</h3><p>מערכי השיעור, הסרטונים ודפי העבודה ערוכים ומוכנים לשימוש בגן, בכיתה, במסגרת הדיור ובבית.</p></div>
+    </div>`;
+}
+
+function renderProgram(p){
+  setCrumbs([{label:'דף הבית',href:'#/'},{label:'חינוך חברתי מיני ומוגנות',href:'#/programs'},{label:p.title}]);
+  document.title = p.title + ' — מרחב בטוח ללמידה';
+  app.innerHTML = `
+    <div class="page-head ${p.cls}">
+      <div class="kicker">${esc(p.tag)}</div>
+      <h1>${p.icon} ${esc(p.title)}</h1>
+      ${p.desc.map(d=>`<p>${esc(d)}</p>`).join('')}
+      <div class="principles">${p.principles.map(x=>`<span>✓ ${esc(x)}</span>`).join('')}</div>
+    </div>
+    <h2 class="section">🗺️ מפת הדרכים השנתית</h2>
+    <p class="section-sub">12 חודשי למידה, שלב אחר שלב. לחצו על חודש כדי לצפות בשיעורים שלו.</p>
+    <div class="roadmap ${p.cls}">
+      ${p.months.map((m,i)=>`
+      <a class="month-card" href="#/program/${p.id}/month/${i+1}">
+        <span class="month-num" aria-hidden="true">חודש<br>${i+1}</span>
+        <h3>${esc(m.title)}</h3>
+        <p>${esc(m.desc)}</p>
+        <span class="go">לשיעורי החודש ←</span>
+      </a>`).join('')}
+    </div>`;
+}
+
+function renderMonth(p, mi){
+  const m = p.months[mi];
+  setCrumbs([{label:'דף הבית',href:'#/'},{label:'חינוך חברתי מיני ומוגנות',href:'#/programs'},{label:p.title,href:'#/program/'+p.id},{label:`חודש ${mi+1}: ${m.title}`}]);
+  document.title = `חודש ${mi+1}: ${m.title} — מרחב בטוח ללמידה`;
+  const prev = mi>0 ? `<a href="#/program/${p.id}/month/${mi}">→ חודש ${mi}: ${esc(p.months[mi-1].title)}</a>` : '<span></span>';
+  const next = mi<11 ? `<a href="#/program/${p.id}/month/${mi+2}">חודש ${mi+2}: ${esc(p.months[mi+1].title)} ←</a>` : '<span></span>';
+  app.innerHTML = `
+    <div class="page-head ${p.cls}">
+      <div class="kicker">${esc(p.tag)} · חודש ${mi+1} מתוך 12</div>
+      <h1>חודש ${mi+1}: ${esc(m.title)}</h1>
+      <p>${esc(m.desc)}</p>
+    </div>
+    <h2 class="section">📚 השיעורים של החודש</h2>
+    <p class="section-sub">החודש מחולק ל-${m.lessons.length} שיעורים. מומלץ ללמד לפי הסדר.</p>
+    <div class="lesson-list">
+      ${m.lessons.map((l,li)=>`
+      <a class="lesson-row ${p.cls}" href="#/program/${p.id}/month/${mi+1}/lesson/${li+1}">
+        <span class="lesson-badge" aria-hidden="true">שיעור ${li+1}</span>
+        <span><h3>${esc(l.title)}</h3><p>${esc(l.summary)}</p></span>
+        <span class="arrow" aria-hidden="true">←</span>
+      </a>`).join('')}
+    </div>
+    <h2 class="section" style="font-size:1.1rem">ניווט בין חודשים</h2>
+    <div class="month-nav">${prev}${next}</div>`;
+}
+
+function renderLesson(p, mi, li){
+  const m = p.months[mi], l = m.lessons[li];
+  setCrumbs([
+    {label:'דף הבית',href:'#/'},
+    {label:p.title,href:'#/program/'+p.id},
+    {label:`חודש ${mi+1}: ${m.title}`,href:`#/program/${p.id}/month/${mi+1}`},
+    {label:`שיעור ${li+1}: ${l.title}`}
+  ]);
+  document.title = l.title + ' — מרחב בטוח ללמידה';
+
+  /* video */
+  let videoInner;
+  if (l.video && /youtube\.com|youtu\.be/.test(l.video)){
+    const id = (l.video.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{6,})/)||[])[1];
+    videoInner = `<iframe src="https://www.youtube.com/embed/${id}" title="${esc(l.title)}" allowfullscreen></iframe>`;
+  } else if (l.video){
+    videoInner = `<video controls preload="metadata"><source src="${esc(l.video)}" type="video/mp4"></video>`;
+  } else {
+    videoInner = `<div class="video-placeholder">
+      <div class="play-circle" aria-hidden="true">▶</div>
+      <p>סרטון הלמידה: ${esc(l.title)}</p>
+      <small>כאן ישובץ סרטון השיעור (קובץ MP4 או קישור YouTube)</small>
+    </div>`;
+  }
+
+  const pdfIcon = `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+
+  app.innerHTML = `
+    <div class="lesson-head ${p.cls}">
+      <div class="kicker">חודש ${mi+1}: ${esc(m.title)} · שיעור ${li+1} מתוך ${m.lessons.length}</div>
+      <h1>${esc(l.title)}</h1>
+      <p>${esc(l.summary)}</p>
+      <div class="goals"><strong>🎯 מטרות השיעור</strong>
+        <ul>${l.goals.map(g=>`<li>${esc(g)}</li>`).join('')}</ul>
+      </div>
+    </div>
+
+    <section class="block" aria-labelledby="vh">
+      <h2 id="vh"><span class="bicon" aria-hidden="true">🎬</span> צפייה בסרטון הלמידה</h2>
+      <div class="video-shell">${videoInner}</div>
+      <p class="video-note">מומלץ לצפות בסרטון יחד, לעצור בנקודות חשובות ולשוחח על מה שראינו.</p>
+    </section>
+
+    <section class="block" aria-labelledby="wh">
+      <h2 id="wh"><span class="bicon" aria-hidden="true">📄</span> חומרי למידה — דפי עבודה להורדה</h2>
+      <div class="worksheets">
+        ${l.worksheets.map(w=>`
+        <a class="ws-btn" href="worksheets/${encodeURIComponent(w)}.pdf" download title="הורדת הקובץ: ${esc(w)}">
+          <span class="ws-icon">${pdfIcon}PDF</span>
+          <span><h3>${esc(w)}</h3><span class="dl">⬇ הורדת קובץ PDF</span></span>
+        </a>`).join('')}
+      </div>
+    </section>
+
+    <div class="month-nav">
+      <a href="#/program/${p.id}/month/${mi+1}">→ חזרה לכל שיעורי חודש ${mi+1}</a>
+      ${li < m.lessons.length-1
+        ? `<a href="#/program/${p.id}/month/${mi+1}/lesson/${li+2}">לשיעור הבא: ${esc(m.lessons[li+1].title)} ←</a>`
+        : (mi<11 ? `<a href="#/program/${p.id}/month/${mi+2}">לחודש הבא: ${esc(p.months[mi+1].title)} ←</a>` : '')}
+    </div>`;
+}
+
+/* ===================================================================
+   STEM HUB — data
+   =================================================================== */
+const HUB = [
+  {id:'therapy', icon:'🫶', tone:'mint',
+   title:'גוף האדם ככלי טיפולי',
+   desc:'שישה מרחבים טיפוליים שבהם הגוף, החושים והתנועה הם הכלי המרכזי לקשר, לוויסות ולהתפתחות.',
+   subs:[
+     {id:'comm',  icon:'💬', title:'תקשורת',          desc:'תקשורת תומכת וחליפית, לוחות, מתגים ושפת גוף.'},
+     {id:'snoez', icon:'🌈', title:'סנוזלן',           desc:'חדר רב-חושי לוויסות, הרגעה וחוויה חושית מודרכת.'},
+     {id:'ot',    icon:'✋', title:'ריפוי בעיסוק',     desc:'מוטוריקה, עצמאות בתפקודי היום-יום והתאמת סביבה.'},
+     {id:'aba',   icon:'📊', title:'ניתוח התנהגות',    desc:'מדידה, חיזוקים ובניית תוכניות התערבות מבוססות נתונים.'},
+     {id:'music', icon:'🎼', title:'תרפיה במוזיקה',    desc:'קצב, צליל ונגינה ככלי לביטוי רגשי ולתקשורת.'},
+     {id:'film',  icon:'🎞️', title:'סרט טיפולי',      desc:'צפייה מונחית וסרטים מותאמים לעיבוד רגשי וחברתי.'}
+   ]},
+
+  {id:'lessons', icon:'📘', tone:'sky',
+   title:'שיעורים מקצועיים',
+   desc:'מערכי שיעור מותאמים בתחומי הליבה, עם המחשה, הדרגתיות ותרגול מעשי.',
+   subs:[
+     {id:'lang',  icon:'🔤', title:'שפה',        desc:'אוצר מילים, הבנת הנקרא, שיח והבעה בעל פה ובכתב.'},
+     {id:'math',  icon:'🔢', title:'מתמטיקה',    desc:'מספרים, כמויות, זמן וכסף — מתמטיקה פונקציונלית לחיים.'},
+     {id:'music', icon:'🎵', title:'מוזיקה',     desc:'הכרת כלים, קצב, שירה משותפת ונגינה בקבוצה.'},
+     {id:'life',  icon:'🏠', title:'כישורי חיים', desc:'עצמאות, התנהלות בקהילה, בישול, קניות ותחבורה.'}
+   ]},
+
+  {id:'safety', icon:'🛡️', tone:'lilac',
+   title:'חינוך חברתי מיני ומוגנות לבוגרים וצעירים',
+   desc:'תוכניות שנתיות מלאות לחינוך חברתי-מיני, למוגנות ולגבולות — לבוגרים ולצעירים.',
+   subs:[
+     {id:'adults',  icon:'🌷', title:'חינוך חברתי מיני לבוגרים', desc:'תוכנית שנתית של 12 חודשים למבוגרים עם מוגבלות שכלית התפתחותית.', link:'#/program/a', badge:'תוכנית שנתית'},
+     {id:'protect', icon:'🔒', title:'מוגנות',                   desc:'זיהוי מצבי סיכון, אמירת לא, סודות ופנייה לעזרה — לכל הגילאים.'},
+     {id:'circles', icon:'🧸', title:'מעגלים (לצעירים)',          desc:'תוכנית שנתית לילדים צעירים: הגוף שלי שלי, גבולות ורשת ביטחון.', link:'#/program/b', badge:'תוכנית שנתית'}
+   ]},
+
+  {id:'health',   icon:'💚', tone:'sage',  title:'בריאות איתנה',
+   desc:'תזונה, תנועה, שינה והרגלים מקדמי בריאות — בשפה פשוטה ומעשית.'},
+  {id:'art',      icon:'🎨', tone:'rose',  title:'מיצגים באומנות',
+   desc:'יצירה, תערוכות ומיצגים — אומנות כשפה של ביטוי אישי וקבוצתי.'},
+  {id:'ai',       icon:'🤖', tone:'aqua',  title:'AI',
+   desc:'בינה מלאכותית ככלי עזר בלמידה, ביצירה ובהנגשת תוכן.'},
+  {id:'games',    icon:'🎲', tone:'peach', title:'משחקים דידקטיים',
+   desc:'משחקי למידה, חידות והתנסויות שמחברות בין הנאה לרכישת מיומנות.'},
+  {id:'science',  icon:'🔬', tone:'slate', title:'מדעים',
+   desc:'ניסויים, תופעות טבע וחקר — מדע מוחשי שאפשר לגעת בו.'},
+  {id:'showcase', icon:'🎬', tone:'sun',   title:'תראו אותנו!',
+   desc:'תלמידים מפיקים, מביימים ומציגים — הבמה שייכת להם.'}
+];
+
+const toneStyle = t => `--tone:var(--p-${t});--tone-2:var(--p-${t}-2);--tone-ink:var(--p-${t}-ink)`;
+const cardById  = id => HUB.find(c=>c.id===id);
+
+/* body figure hotspots — x,y = dot; lx,ly = label anchor; a = label side */
+const BODY_POINTS = [
+  {n:1, x:150, y:44,  lx:246, ly:30,  a:'start', color:'#7C5CC4', icon:'🧠',
+   organ:'brain',   title:'מוח ומערכת העצבים',
+   text:'מרכז הבקרה של הגוף: קליטת מידע מהחושים, ויסות רגשי, זיכרון ולמידה.'},
+  {n:2, x:118, y:150, lx:52,  ly:120, a:'end',   color:'#2E90B5', icon:'🫁',
+   organ:'lungs',   title:'ריאות ונשימה',
+   text:'נשימה עמוקה ואיטית מרגיעה את הגוף — כלי ויסות שזמין לנו בכל רגע.'},
+  {n:3, x:170, y:158, lx:252, ly:150, a:'start', color:'#D64A63', icon:'❤️',
+   organ:'heart',   title:'לב ומחזור הדם',
+   text:'הלב פועם מהר יותר בהתרגשות, בפחד ובמאמץ — כך הגוף מספר לנו מה קורה בפנים.'},
+  {n:4, x:150, y:212, lx:250, ly:238, a:'start', color:'#D98A2B', icon:'🍎',
+   organ:'stomach', title:'מערכת העיכול',
+   text:'"פרפרים בבטן" הם תגובה גופנית אמיתית לרגש — הבטן והמוח מדברים ביניהם.'},
+  {n:5, x:74,  y:236, lx:44,  ly:290, a:'end',   color:'#C97742', icon:'✋',
+   organ:'hand',    title:'ידיים, מגע ותחושה',
+   text:'מוטוריקה עדינה ותחושת מגע — הדרך המרכזית שלנו לחקור את העולם ולתקשר איתו.'},
+  {n:6, x:176, y:330, lx:250, ly:352, a:'start', color:'#4E7A8C', icon:'🦴',
+   organ:'bones',   title:'שלד ושרירים',
+   text:'העצמות והשרירים נותנים יציבות, תנועה וכוח — ומאפשרים לנו לעמוד, ללכת ולרקוד.'}
+];
+
+/* ===================================================================
+   Shared library — static manifest (content/files.json) on GitHub Pages
+   Public: everyone reads the manifest and can open / download.
+   Editor: unlocked with a GitHub token, publishes straight to the repo.
+   =================================================================== */
+/* ═══════════════════════════════════════════════════════════════════
+   ⚙  הגדרת המאגר — למלא פעם אחת בלבד, ואז הצוות מזין רק מפתח גישה
+   ═══════════════════════════════════════════════════════════════════ */
+const SITE_REPO = {
+  owner : '',        // שם המשתמש ב-GitHub, למשל 'maoz-k'
+  name  : '',        // שם המאגר, למשל 'stem-site'
+  branch: 'main'
+};
+/* ═══════════════════════════════════════════════════════════════════ */
+
+const CONTENT_DIR = 'content';
+const CFG_KEY = 'stemhub.repo';
+
+function cfgRaw(){ try { return JSON.parse(localStorage.getItem(CFG_KEY) || 'null') || {}; } catch(e){ return {}; } }
+function cfgGet(){
+  const o = cfgRaw();
+  return {
+    owner : o.owner  || SITE_REPO.owner,
+    name  : o.name   || SITE_REPO.name,
+    branch: o.branch || SITE_REPO.branch || 'main',
+    token : o.token  || ''
+  };
+}
+function cfgSet(c){ try { localStorage.setItem(CFG_KEY, JSON.stringify({...cfgRaw(), ...c})); } catch(e){} }
+function cfgClear(){ try { localStorage.removeItem(CFG_KEY); } catch(e){} }
+function repoReady(){ const c = cfgGet(); return !!(c.owner && c.name); }
+function isEditor(){ const c = cfgGet(); return !!(c.token && c.owner && c.name); }
+
+let MANIFEST = null, manifestLoaded = false, manifestOffline = false;
+
+async function loadManifest(force){
+  if (manifestLoaded && !force) return MANIFEST;
+  MANIFEST = {spaces:{}}; manifestOffline = false;
+  try{
+    const r = await fetch(`${CONTENT_DIR}/files.json?t=${Date.now()}`, {cache:'no-store'});
+    if (!r.ok) throw new Error(r.status);
+    const j = await r.json();
+    MANIFEST = {spaces: (j && j.spaces) || {}};
+  }catch(e){ manifestOffline = true; }
+  manifestLoaded = true;
+  return MANIFEST;
+}
+function spaceItems(space){ return ((MANIFEST && MANIFEST.spaces[space]) || []).slice().sort((a,b)=>(b.at||0)-(a.at||0)); }
+function spaceCount(space){ return ((MANIFEST && MANIFEST.spaces[space]) || []).length; }
+
+/* ---------- GitHub API ---------- */
+function ghHeaders(){
+  const c = cfgGet();
+  return {Authorization:'Bearer '+c.token, Accept:'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28'};
+}
+function ghURL(path){
+  const c = cfgGet();
+  return `https://api.github.com/repos/${c.owner}/${c.name}/contents/${path}`;
+}
+async function ghGet(path){
+  const c = cfgGet();
+  const r = await fetch(ghURL(path)+`?ref=${encodeURIComponent(c.branch||'main')}`, {headers:ghHeaders(), cache:'no-store'});
+  if (r.status === 404) return null;
+  if (!r.ok) throw new Error('GitHub '+r.status+' — '+(r.status===401?'המפתח שגוי או פג תוקף':'שגיאת גישה למאגר'));
+  return r.json();
+}
+async function ghPut(path, b64, message, sha){
+  const c = cfgGet();
+  const body = {message, content:b64, branch:c.branch||'main'};
+  if (sha) body.sha = sha;
+  const r = await fetch(ghURL(path), {method:'PUT', headers:{...ghHeaders(),'Content-Type':'application/json'}, body:JSON.stringify(body)});
+  if (!r.ok){ let d=''; try{ d=(await r.json()).message||''; }catch(e){} throw new Error('GitHub '+r.status+' '+d); }
+  return r.json();
+}
+async function ghDelete(path, sha, message){
+  const c = cfgGet();
+  const r = await fetch(ghURL(path), {method:'DELETE', headers:{...ghHeaders(),'Content-Type':'application/json'},
+    body:JSON.stringify({message, sha, branch:c.branch||'main'})});
+  if (!r.ok) throw new Error('GitHub '+r.status);
+  return r.json();
+}
+function b64FromBuffer(buf){
+  const bytes = new Uint8Array(buf); const chunk = 0x8000; let s = '';
+  for (let i=0;i<bytes.length;i+=chunk) s += String.fromCharCode.apply(null, bytes.subarray(i,i+chunk));
+  return btoa(s);
+}
+function b64FromText(txt){
+  return b64FromBuffer(new TextEncoder().encode(txt).buffer);
+}
+async function saveManifest(msg){
+  const path = `${CONTENT_DIR}/files.json`;
+  let sha = null;
+  const cur = await ghGet(path);
+  if (cur) sha = cur.sha;
+  const body = JSON.stringify({updated:new Date().toISOString(), spaces:MANIFEST.spaces}, null, 2);
+  await ghPut(path, b64FromText(body), msg, sha);
+}
+
+/* ---------- helpers ---------- */
+const fmtSize = b => !b ? '' : b<1024 ? b+' ב׳' : b<1048576 ? (b/1024).toFixed(1)+' KB' : (b/1048576).toFixed(1)+' MB';
+const extOf   = n => (String(n).split('.').pop()||'').toLowerCase();
+function ytId(url){
+  const m = String(url||'').match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/);
+  return m ? m[1] : null;
+}
+const ytThumb = id => `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+const ytWatch = id => `https://www.youtube.com/watch?v=${id}`;
+
+function kindOf(it){
+  if (it.kind === 'youtube') return 'youtube';
+  const t = it.type||'', e = extOf(it.name);
+  if (t.startsWith('image') || ['png','jpg','jpeg','gif','webp','svg','avif'].includes(e)) return 'image';
+  if (t.startsWith('video') || ['mp4','webm','mov','m4v'].includes(e)) return 'video';
+  if (t.startsWith('audio') || ['mp3','wav','ogg','m4a'].includes(e)) return 'audio';
+  if (e === 'pdf') return 'pdf';
+  if (['doc','docx','ppt','pptx','xls','xlsx'].includes(e)) return 'office';
+  return 'file';
+}
+const KIND_ICON = {image:'🖼️', video:'🎬', audio:'🎵', pdf:'📕', office:'📊', file:'📄', youtube:'▶️'};
+const KIND_NAME = {image:'תמונה', video:'סרטון', audio:'שמע', pdf:'PDF', office:'מסמך', file:'קובץ', youtube:'YouTube'};
+function fileURL(it){ return it.kind==='youtube' ? ytWatch(it.videoId) : (it.url ? it.url : encodeURI(it.path)); }
+function absURL(u){ try { return new URL(u, location.href).href; } catch(e){ return u; } }
+function officeViewer(u){ return 'https://view.officeapps.live.com/op/view.aspx?src='+encodeURIComponent(absURL(u)); }
+function slugSpace(s){ return s.replace(/[^a-z0-9]+/gi,'-'); }
+
+/* ===================================================================
+   Lightbox viewer
+   =================================================================== */
+function openViewer(it){
+  const k = kindOf(it), u = fileURL(it);
+  const box = document.getElementById('viewer');
+  const body= document.getElementById('viewerBody');
+  document.getElementById('viewerTitle').textContent = it.name;
+  let inner;
+  if (k==='youtube')    inner = `<iframe src="https://www.youtube-nocookie.com/embed/${it.videoId}?autoplay=1&rel=0" title="${esc(it.name)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+  else if (k==='image') inner = `<img src="${u}" alt="${esc(it.name)}">`;
+  else if (k==='video') inner = `<video src="${u}" controls autoplay playsinline></video>`;
+  else if (k==='audio') inner = `<div class="v-audio"><span aria-hidden="true">🎵</span><audio src="${u}" controls autoplay></audio></div>`;
+  else if (k==='pdf')   inner = `<iframe src="${u}#view=FitH" title="${esc(it.name)}"></iframe>`;
+  else if (k==='office')inner = `<iframe src="${officeViewer(u)}" title="${esc(it.name)}"></iframe>`;
+  else inner = `<div class="v-none"><span aria-hidden="true">📄</span>
+      <p>לא ניתן להציג את סוג הקובץ הזה בדפדפן.</p>
+      <a class="big-cta" href="${u}" download="${esc(it.name)}">⬇ הורדת הקובץ</a></div>`;
+  body.innerHTML = inner;
+  const open = document.getElementById('viewerOpen');
+  open.href = k==='office' ? officeViewer(u) : u;
+  open.textContent = k==='youtube' ? '↗ צפייה ביוטיוב' : '↗ פתיחה בלשונית חדשה';
+  const dl = document.getElementById('viewerDl');
+  dl.hidden = (k==='youtube');
+  dl.href = u; dl.setAttribute('download', it.name);
+  box.hidden = false; requestAnimationFrame(()=>box.classList.add('open'));
+}
+function closeViewer(){
+  const box = document.getElementById('viewer');
+  box.classList.remove('open');
+  setTimeout(()=>{ box.hidden = true; document.getElementById('viewerBody').innerHTML=''; }, 240);
+}
+
+/* ===================================================================
+   Editor gate
+   =================================================================== */
+function editorDialog(){
+  const c = cfgGet();
+  const wrap = document.getElementById('gate');
+  document.getElementById('gToken').value  = c.token  || '';
+  document.getElementById('gOwner').value  = c.owner  || '';
+  document.getElementById('gName').value   = c.name   || '';
+  document.getElementById('gBranch').value = c.branch || 'main';
+  const setup = document.getElementById('gSetup');
+  const out   = document.getElementById('gOut');
+  if (!repoReady()){
+    setup.open = true;
+    out.textContent = '⚠ המאגר טרם הוגדר — פתחו "הגדרות מאגר" והשלימו פעם אחת.';
+  } else {
+    setup.open = false;
+    out.textContent = isEditor() ? '✔ מצב עריכה פעיל במחשב הזה' : '';
+  }
+  document.getElementById('gRepoLbl').textContent = repoReady() ? `${c.owner}/${c.name}` : 'לא הוגדר';
+  wrap.hidden = false; requestAnimationFrame(()=>wrap.classList.add('open'));
+  setTimeout(()=>document.getElementById('gToken').focus(), 260);
+}
+function closeGate(){
+  const wrap = document.getElementById('gate');
+  wrap.classList.remove('open');
+  setTimeout(()=>wrap.hidden = true, 240);
+}
+async function gateSave(){
+  const out = document.getElementById('gOut');
+  const token = document.getElementById('gToken').value.trim();
+  const adv = {
+    owner:  document.getElementById('gOwner').value.trim(),
+    name:   document.getElementById('gName').value.trim(),
+    branch: document.getElementById('gBranch').value.trim() || 'main'
+  };
+  if (adv.owner || adv.name) cfgSet(adv);
+  if (!token){ out.textContent = '⚠ יש להזין מפתח גישה.'; return; }
+  if (!repoReady()){
+    out.textContent = '⚠ המאגר טרם הוגדר — פתחו "הגדרות מאגר" והשלימו שם משתמש ושם מאגר.';
+    document.getElementById('gSetup').open = true; return;
+  }
+  out.textContent = 'בודק מפתח…';
+  cfgSet({token});
+  try{
+    await ghGet(`${CONTENT_DIR}/files.json`);
+    out.textContent = '✔ המפתח אומת — מצב עריכה פעיל.';
+    toast('מצב עריכה הופעל');
+    setTimeout(()=>{ closeGate(); refreshEditorUI(); }, 700);
+  }catch(e){
+    out.textContent = '✖ ' + (e.message || 'המפתח שגוי');
+    cfgSet({token:''});
+  }
+}
+function gateLogout(){ cfgClear(); toast('יצאת ממצב עריכה'); closeGate(); refreshEditorUI(); }
+function refreshEditorUI(){
+  const b = document.getElementById('editorBtn');
+  if (b){
+    b.classList.toggle('on', isEditor());
+    b.innerHTML = isEditor() ? '✏️ מצב עריכה' : '🔐 כניסת צוות';
+  }
+  if (currentSpace) renderFiles(currentSpace);
+}
+
+/* ===================================================================
+   Workspace panel
+   =================================================================== */
+function showSpace(card, sub){
+  const space = card.id + (sub ? ':'+sub.id : '');
+  currentSpace = space;
+  setModalHead(card, sub);
+  modalBody.innerHTML = `
+    <div class="panel">
+      ${card.subs ? `<button class="modal-back" type="button" id="mBack">→ חזרה לכל התת-קטגוריות</button>` : ''}
+      <div class="ws-head">
+        <h3>${esc(sub ? sub.title : card.title)}</h3>
+        <p>${esc(sub ? sub.desc : card.desc)}</p>
+      </div>
+      <div id="filesWrap"><div class="empty"><span class="ico">⏳</span>טוען את חומרי המרחב…</div></div>
+    </div>`;
+  const back = document.getElementById('mBack');
+  if (back) back.addEventListener('click', ()=>{ setModalHead(card); showSubs(card); });
+  loadManifest().then(()=>renderFiles(space));
+}
+
+async function renderFiles(space){
+  const wrap = document.getElementById('filesWrap');
+  if (!wrap || currentSpace !== space) return;
+  const items = spaceItems(space);
+  const ed = isEditor();
+
+  const cards = items.map((it,i)=>{
+    const k = kindOf(it), u = fileURL(it);
+    const yt = k === 'youtube';
+    let thumb = `<span class="k-emoji" aria-hidden="true">${KIND_ICON[k]}</span>`;
+    if (yt) thumb = `<img src="${ytThumb(it.videoId)}" alt="" loading="lazy"><span class="play-badge yt" aria-hidden="true">▶</span>`;
+    else if (k==='image') thumb = `<img src="${u}" alt="" loading="lazy">`;
+    else if (k==='video') thumb = `<video src="${u}" muted preload="metadata"></video><span class="play-badge" aria-hidden="true">▶</span>`;
+    return `<div class="lib-item${yt?' is-yt':''}" data-i="${i}">
+        <div class="lib-thumb">${thumb}<span class="kind${yt?' yt':''}">${KIND_NAME[k]}</span></div>
+        <div class="lib-meta">
+          <div class="nm" title="${esc(it.name)}">${esc(it.name)}</div>
+          <div class="sz">${yt ? 'סרטון מקוון' : fmtSize(it.size)}</div>
+          <div class="lib-actions">
+            <button class="act view" type="button" data-view="${i}">${yt ? '▶ צפייה' : '👁 פתיחה'}</button>
+            ${yt
+              ? `<a class="act yt" href="${u}" target="_blank" rel="noopener" data-stop>↗ יוטיוב</a>`
+              : `<a class="act dl" href="${u}" download="${esc(it.name)}" data-stop>⬇ הורדה</a>`}
+            ${ed ? `<button class="act del" type="button" data-del="${i}" title="מחיקה">🗑</button>` : ''}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  const listBlock = items.length
+    ? `<div class="lib-grid">${cards}</div>`
+    : `<div class="empty"><span class="ico">🗂️</span>
+         עדיין אין חומרים במרחב הזה.${ed ? '<br>העלו את הקובץ הראשון למטה.' : '<br>החומרים יתווספו בקרוב.'}</div>`;
+
+  const offlineNote = manifestOffline
+    ? `<div class="note warn">⚠ לא נמצא קובץ הרשימה <code>content/files.json</code>.
+        אם פתחתם את הדף מהמחשב ישירות — זה תקין; הרשימה תעבוד כשהאתר יעלה לאוויר.</div>` : '';
+
+  const uploader = ed ? `
+    <div class="dz" id="dz" tabindex="0" role="button" aria-label="אזור העלאת קבצים">
+      <div class="dz-icon" aria-hidden="true">📤</div>
+      <h4>גררו לכאן קבצים או לחצו לבחירה</h4>
+      <p>הקבצים יפורסמו לאתר ויהיו זמינים לכל מי שנכנס.</p>
+      <span class="pick">בחירת קבצים</span>
+      <p class="dz-note">מומלץ עד 25MB לקובץ. הפרסום נשמר ישירות למאגר של האתר.</p>
+    </div>
+    <div class="yt-add">
+      <div class="yt-head"><span aria-hidden="true">▶️</span> הוספת סרטון YouTube</div>
+      <p class="yt-sub">מתאים לסרטונים ארוכים או כבדים — הקישור נשמר ברשימה והסרטון מתנגן בתוך האתר.</p>
+      <div class="yt-row">
+        <input id="ytUrl" type="url" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
+        <input id="ytName" type="text" placeholder="שם להצגה (לא חובה)" autocomplete="off">
+        <button class="yt-btn" type="button" id="ytAdd">הוספה לרשימה</button>
+      </div>
+    </div>
+    <div class="up-log" id="upLog" hidden></div>`
+    : `<div class="note">🔐 להוספת חומרים נדרשת כניסת צוות — לחצו על <strong>כניסת צוות</strong> בראש החלון.</div>`;
+
+  wrap.innerHTML = `
+    <div class="files-head">
+      <h4>ספריית המרחב</h4><span class="cnt">${items.length}</span>
+      <button class="lib-refresh" type="button" id="libRefresh" title="רענון הרשימה">⟳ רענון</button>
+      <button class="lib-gate ${ed?'on':''}" type="button" id="editorBtn">${ed?'✏️ מצב עריכה':'🔐 כניסת צוות'}</button>
+    </div>
+    ${offlineNote}
+    ${listBlock}
+    <div class="up-zone">${uploader}</div>`;
+
+  wrap.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click', ()=>openViewer(items[+b.dataset.view])));
+  wrap.querySelectorAll('.lib-item').forEach(el=>el.addEventListener('click', e=>{
+    if (e.target.closest('[data-stop]') || e.target.closest('[data-del]')) return;
+    openViewer(items[+el.dataset.i]);
+  }));
+  wrap.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click', e=>{
+    e.stopPropagation(); deleteItem(space, items[+b.dataset.del]);
+  }));
+  document.getElementById('editorBtn').addEventListener('click', editorDialog);
+  document.getElementById('libRefresh').addEventListener('click', async ()=>{
+    toast('מרענן…'); await loadManifest(true); renderFiles(space);
+  });
+  if (ed){
+    bindDropzone(space);
+    const add = document.getElementById('ytAdd');
+    const url = document.getElementById('ytUrl');
+    if (add){
+      add.addEventListener('click', ()=>addYouTube(space));
+      url.addEventListener('keydown', e=>{ if(e.key==='Enter') addYouTube(space); });
+      document.getElementById('ytName').addEventListener('keydown', e=>{ if(e.key==='Enter') addYouTube(space); });
+    }
+  }
+}
+
+async function addYouTube(space){
+  if (!isEditor()){ editorDialog(); return; }
+  const urlEl = document.getElementById('ytUrl'), nameEl = document.getElementById('ytName');
+  const id = ytId(urlEl.value.trim());
+  if (!id){ toast('הקישור אינו קישור יוטיוב תקין'); urlEl.focus(); return; }
+  const name = nameEl.value.trim() || 'סרטון YouTube';
+  MANIFEST.spaces[space] = MANIFEST.spaces[space] || [];
+  if (MANIFEST.spaces[space].some(x=>x.videoId === id)){ toast('הסרטון כבר קיים במרחב'); return; }
+  MANIFEST.spaces[space].push({kind:'youtube', name, videoId:id, url:ytWatch(id), at:Date.now()});
+  try{
+    await saveManifest(`הוספת סרטון YouTube: ${name}`);
+    toast('הסרטון נוסף למרחב');
+    urlEl.value = ''; nameEl.value = '';
+  }catch(e){
+    MANIFEST.spaces[space] = MANIFEST.spaces[space].filter(x=>x.videoId !== id);
+    toast('ההוספה נכשלה — בדקו את מפתח הגישה');
+  }
+  renderFiles(space);
+}
+
+/* ---------- publish ---------- */
+function logLine(msg, cls){
+  const log = document.getElementById('upLog');
+  if (!log) return;
+  log.hidden = false;
+  log.insertAdjacentHTML('beforeend', `<div class="ln ${cls||''}">${msg}</div>`);
+  log.scrollTop = log.scrollHeight;
+}
+async function uploadFiles(space, fileList){
+  if (!isEditor()){ toast('נדרשת כניסת צוות'); editorDialog(); return; }
+  const files = [...fileList];
+  const log = document.getElementById('upLog');
+  if (log){ log.hidden = false; log.innerHTML = ''; }
+  MANIFEST.spaces[space] = MANIFEST.spaces[space] || [];
+  let ok = 0;
+  for (const f of files){
+    logLine(`⏫ מעלה: ${esc(f.name)}…`);
+    try{
+      const buf  = await f.arrayBuffer();
+      const ext  = extOf(f.name);
+      const path = `${CONTENT_DIR}/files/${slugSpace(space)}/${Date.now()}-${Math.random().toString(36).slice(2,7)}${ext?'.'+ext:''}`;
+      await ghPut(path, b64FromBuffer(buf), `העלאת קובץ: ${f.name}`);
+      MANIFEST.spaces[space].push({name:f.name, path, type:f.type||'', size:f.size, at:Date.now()});
+      ok++;
+      logLine(`✔ הועלה: ${esc(f.name)}`, 'ok');
+    }catch(e){
+      logLine(`✖ נכשל: ${esc(f.name)} — ${esc(e.message||'')}`, 'bad');
+    }
+  }
+  if (ok){
+    try{
+      await saveManifest(`עדכון רשימת קבצים (${ok})`);
+      logLine('✔ הרשימה עודכנה — הקבצים יופיעו לכולם תוך דקה', 'ok');
+      toast(ok===1 ? 'הקובץ פורסם' : `${ok} קבצים פורסמו`);
+    }catch(e){ logLine('✖ עדכון הרשימה נכשל — '+esc(e.message||''), 'bad'); }
+  }
+  renderFiles(space);
+}
+async function deleteItem(space, it){
+  if (!isEditor()) return;
+  if (!confirm(`למחוק את "${it.name}" מהמרחב?`)) return;
+  const yt = it.kind === 'youtube';
+  try{
+    if (!yt && it.path){
+      const meta = await ghGet(it.path);
+      if (meta) await ghDelete(it.path, meta.sha, `מחיקת קובץ: ${it.name}`);
+    }
+    MANIFEST.spaces[space] = (MANIFEST.spaces[space]||[]).filter(x =>
+      yt ? x.videoId !== it.videoId : x.path !== it.path);
+    await saveManifest(`מחיקה: ${it.name}`);
+    toast(yt ? 'הסרטון הוסר' : 'הקובץ נמחק');
+  }catch(e){ toast('המחיקה נכשלה'); }
+  renderFiles(space);
+}
+function bindDropzone(space){
+  const dz = document.getElementById('dz');
+  if (!dz) return;
+  const pick = ()=>{
+    hiddenFile.value = '';
+    hiddenFile.onchange = ()=>{ if (hiddenFile.files.length) uploadFiles(space, hiddenFile.files); };
+    hiddenFile.click();
+  };
+  dz.addEventListener('click', pick);
+  dz.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); }});
+  ['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev, e=>{ e.preventDefault(); e.stopPropagation(); dz.classList.add('drag'); }));
+  ['dragleave','drop'].forEach(ev=>dz.addEventListener(ev, e=>{
+    e.preventDefault(); e.stopPropagation();
+    if (ev==='dragleave' && dz.contains(e.relatedTarget)) return;
+    dz.classList.remove('drag');
+  }));
+  dz.addEventListener('drop', e=>{
+    const fl = e.dataTransfer && e.dataTransfer.files;
+    if (fl && fl.length) uploadFiles(space, fl);
+  });
+}
+
+/* ===================================================================
+   Toast
+   =================================================================== */
+let toastT;
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove('show'), 2400);
+}
+
+/* ===================================================================
+   HOME (hub)
+   =================================================================== */
+function bodySVG(){
+  const pts = BODY_POINTS.map((p,i)=>{
+    const tx = p.a === 'start' ? p.lx + 4 : p.lx - 4;
+    return `
+    <g class="hot" data-i="${i}" data-organ="${p.organ}" style="color:${p.color}"
+       tabindex="0" role="button" aria-label="${esc(p.title)}">
+      <line class="lead" x1="${p.x}" y1="${p.y}" x2="${p.lx}" y2="${p.ly}"
+            stroke="${p.color}" stroke-width="1.6" stroke-dasharray="4 4"/>
+      <circle class="hit" cx="${p.x}" cy="${p.y}" r="22" fill="transparent"/>
+      <circle class="halo" cx="${p.x}" cy="${p.y}" r="11" fill="${p.color}"/>
+      <circle class="dot"  cx="${p.x}" cy="${p.y}" r="10" fill="${p.color}" stroke="#fff" stroke-width="3"/>
+      <text class="dot-n" x="${p.x}" y="${p.y}" fill="#fff" text-anchor="middle">${p.n}</text>
+      <text class="lbl" x="${tx}" y="${p.ly + 4}" text-anchor="${p.a}">${esc(p.title)}</text>
+    </g>`;
+  }).join('');
+
+  return `
+  <svg class="body-svg" viewBox="0 0 300 420" role="img"
+       aria-label="איור אינטראקטיבי של גוף האדם עם שש נקודות מידע">
+    <defs>
+      <linearGradient id="skinG" x1="0" y1="0" x2="0.6" y2="1">
+        <stop offset="0%"   stop-color="#EAF6FF"/>
+        <stop offset="45%"  stop-color="#CFE6F7"/>
+        <stop offset="100%" stop-color="#B7D7EC"/>
+      </linearGradient>
+      <linearGradient id="limbG" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#D8ECFA"/>
+        <stop offset="100%" stop-color="#BADAEE"/>
+      </linearGradient>
+      <radialGradient id="auraG" cx="50%" cy="42%" r="60%">
+        <stop offset="0%"   stop-color="#CFEDE4" stop-opacity=".55"/>
+        <stop offset="60%"  stop-color="#D4E6F7" stop-opacity=".35"/>
+        <stop offset="100%" stop-color="#D4E6F7" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="brainG" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#B79BE8"/><stop offset="100%" stop-color="#8E6FD1"/>
+      </linearGradient>
+      <linearGradient id="lungG" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#8FD3EC"/><stop offset="100%" stop-color="#4FA9CC"/>
+      </linearGradient>
+      <linearGradient id="heartG" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#F0798E"/><stop offset="100%" stop-color="#D0374F"/>
+      </linearGradient>
+      <linearGradient id="gutG" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#F5C06B"/><stop offset="100%" stop-color="#E2963A"/>
+      </linearGradient>
+      <linearGradient id="boneG" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#DCE8F0"/>
+      </linearGradient>
+      <linearGradient id="handG" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#F8CDAE"/><stop offset="100%" stop-color="#E0A277"/>
+      </linearGradient>
+    </defs>
+
+    <ellipse cx="150" cy="210" rx="128" ry="196" fill="url(#auraG)"/>
+
+    <!-- ===== silhouette ===== -->
+    <g>
+      <!-- arms -->
+      <path class="fig-limb" stroke="url(#limbG)" fill="none" stroke-linecap="round" stroke-width="21"
+            d="M117 122 C 93 136, 80 182, 76 224"/>
+      <path class="fig-limb" stroke="url(#limbG)" fill="none" stroke-linecap="round" stroke-width="21"
+            d="M183 122 C 207 136, 220 182, 224 224"/>
+      <!-- legs -->
+      <path class="fig-limb" stroke="url(#limbG)" fill="none" stroke-linecap="round" stroke-width="26"
+            d="M134 254 C 129 296, 127 346, 126 386"/>
+      <path class="fig-limb" stroke="url(#limbG)" fill="none" stroke-linecap="round" stroke-width="26"
+            d="M166 254 C 171 296, 173 346, 174 386"/>
+      <!-- feet -->
+      <ellipse class="fig-body" fill="url(#skinG)" stroke="#7FA9CB" stroke-width="1.8" cx="122" cy="396" rx="16" ry="8.5"/>
+      <ellipse class="fig-body" fill="url(#skinG)" stroke="#7FA9CB" stroke-width="1.8" cx="178" cy="396" rx="16" ry="8.5"/>
+      <!-- hands -->
+      <circle class="fig-body" fill="url(#skinG)" stroke="#7FA9CB" stroke-width="1.8" cx="74" cy="232" r="14"/>
+      <circle class="fig-body" fill="url(#skinG)" stroke="#7FA9CB" stroke-width="1.8" cx="226" cy="232" r="14"/>
+      <!-- torso -->
+      <path class="fig-body" fill="url(#skinG)" stroke="#7FA9CB" stroke-width="1.8"
+        d="M118 118 Q150 104 182 118 L192 178 Q198 216 188 256 Q150 264 112 256 Q102 216 108 178 Z"/>
+      <!-- neck -->
+      <rect class="fig-body" fill="url(#skinG)" stroke="#7FA9CB" stroke-width="1.8"
+            x="140" y="88" width="20" height="28" rx="10"/>
+      <!-- head -->
+      <circle class="fig-body" fill="url(#skinG)" stroke="#7FA9CB" stroke-width="1.8" cx="150" cy="60" r="37"/>
+      <!-- gentle face -->
+      <g opacity=".8">
+        <circle fill="#5C88AB" cx="139" cy="74" r="2.9"/>
+        <circle fill="#5C88AB" cx="161" cy="74" r="2.9"/>
+        <path d="M141 84 q9 7 18 0" stroke="#5C88AB" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- ===== organs ===== -->
+    <g id="g-brain" class="organ-g">
+      <path class="organ" fill="url(#brainG)"
+        d="M133 42 q-7 -16 11 -19 q9 -8 19 1 q16 0 15 15 q7 10 -2 17 q-3 11 -16 8 q-12 6 -19 -3 q-14 -3 -8 -19z"/>
+      <g stroke="#FFFFFF" stroke-width="1.6" fill="none" opacity=".72" stroke-linecap="round">
+        <path d="M150 26 q-6 8 0 15 q6 8 0 15"/>
+        <path d="M138 35 q7 5 0 11"/><path d="M163 35 q-7 5 0 11"/>
+      </g>
+    </g>
+
+    <g id="g-lungs" class="organ-g">
+      <path class="organ" fill="url(#lungG)"
+        d="M144 132 q-21 3 -24 25 q-3 21 6 28 q12 8 18 -6 q3 -23 0 -47z"/>
+      <path class="organ" fill="url(#lungG)"
+        d="M156 132 q21 3 24 25 q3 21 -6 28 q-12 8 -18 -6 q-3 -23 0 -47z"/>
+      <g stroke="#FFFFFF" stroke-width="2.2" fill="none" opacity=".8" stroke-linecap="round">
+        <path d="M150 122 v14"/><path d="M150 136 l-10 8"/><path d="M150 136 l10 8"/>
+      </g>
+    </g>
+
+    <g id="g-heart" class="organ-g">
+      <path class="organ" fill="url(#heartG)" stroke="#FFFFFF" stroke-width="1.6" stroke-opacity=".55"
+        d="M168 152 c6 -10 21 -7 21 6 c0 13 -16 23 -21 28 c-5 -5 -21 -15 -21 -28 c0 -13 15 -16 21 -6z"/>
+    </g>
+
+    <g id="g-stomach" class="organ-g">
+      <path class="organ" fill="url(#gutG)"
+        d="M137 196 q9 -9 20 -4 q13 6 12 19 q-1 13 -14 15 q-15 2 -19 -9 q-4 -12 1 -21z"/>
+      <path class="organ" fill="none" stroke="url(#gutG)" stroke-width="6.5" stroke-linecap="round"
+        d="M140 236 q11 6 21 -1 q10 -7 16 2 q5 8 -3 12 q-13 6 -27 1"/>
+    </g>
+
+    <g id="g-bones" class="organ-g">
+      <!-- femurs with knee joints -->
+      <g class="organ">
+        <path d="M170 272 L174 356" stroke="#7C9FBA" stroke-width="11" stroke-linecap="round" fill="none"/>
+        <path d="M130 272 L126 356" stroke="#7C9FBA" stroke-width="11" stroke-linecap="round" fill="none"/>
+        <path d="M170 272 L174 356" stroke="url(#boneG)" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M130 272 L126 356" stroke="url(#boneG)" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <circle cx="172" cy="314" r="7" fill="url(#boneG)" stroke="#7C9FBA" stroke-width="1.8"/>
+        <circle cx="128" cy="314" r="7" fill="url(#boneG)" stroke="#7C9FBA" stroke-width="1.8"/>
+      </g>
+      <!-- ribcage + spine -->
+      <g class="organ" stroke="#8FB2CC" stroke-width="3.4" stroke-linecap="round" fill="none" opacity=".95">
+        <path d="M128 136 q22 -7 44 0"/>
+        <path d="M125 153 q25 -7 50 0"/>
+        <path d="M127 170 q23 -7 46 0"/>
+        <path d="M150 126 v54"/>
+      </g>
+      <!-- pelvis -->
+      <path class="organ" d="M126 246 q24 12 48 0 q-4 16 -24 18 q-20 -2 -24 -18z"
+            fill="url(#boneG)" stroke="#8FB2CC" stroke-width="1.8" opacity=".95"/>
+    </g>
+
+    <g id="g-hand" class="organ-g">
+      <circle class="organ" fill="url(#handG)" cx="74" cy="232" r="13"/>
+      <g class="organ" stroke="#B87849" stroke-width="2.6" stroke-linecap="round" fill="none">
+        <path d="M67 226 v-9"/><path d="M74 224 v-11"/><path d="M81 226 v-9"/>
+      </g>
+      <circle class="organ" fill="url(#handG)" cx="226" cy="232" r="13"/>
+    </g>
+
+    ${pts}
+  </svg>`;
+}
+
+function renderHub(){
+  setCrumbs([]);
+  document.title = 'גוף האדם · STEM — מרחב בטוח ללמידה';
+  app.innerHTML = `
+    <section class="hub-hero">
+      <div class="hub-copy">
+        <span class="hub-eyebrow">✦ מרחב למידה, טיפול ויצירה</span>
+        <h1 class="hub-title">גוף האדם <span class="stem">· STEM</span></h1>
+        <p class="hub-sub">מרחב אחד שמחבר בין טיפול, לימוד, מדע ואומנות — כל תחום עם המרחב הייעודי שלו,
+        חומרי הלמידה שלו והיצירות של התלמידים.</p>
+        <div class="hub-chips">
+          <span>🫶 ${HUB[0].subs.length} מרחבים טיפוליים</span>
+          <span>📘 ${HUB[1].subs.length} מקצועות ליבה</span>
+          <span>🛡️ 2 תוכניות שנתיות</span>
+          <span>📂 העלאת חומרים בכל מרחב</span>
+        </div>
+      </div>
+      <div class="body-stage" id="bodyStage">
+        ${bodySVG()}
+        <div class="body-tip" id="bodyTip"></div>
+        <div class="body-hint">✨ רחפו על הנקודות המסומנות — או לחצו כדי לנעול הסבר</div>
+      </div>
+    </section>
+
+    <h2 class="section">🧩 המרחבים שלנו</h2>
+    <p class="section-sub">בחרו תחום כדי להיכנס אליו, לצפות בתת-הקטגוריות ולנהל את חומרי הלמידה.</p>
+    <div class="hub-grid">
+      ${HUB.map(c=>`
+        <button class="hub-card" type="button" style="${toneStyle(c.tone)}" data-card="${c.id}">
+          <span class="count" data-count="${c.id}">${c.subs ? c.subs.length+' תחומים' : '…'}</span>
+          <span class="hub-icon" aria-hidden="true">${c.icon}</span>
+          <h3>${esc(c.title)}</h3>
+          <p>${esc(c.desc)}</p>
+          <span class="meta">${c.subs ? 'לצפייה בתת-הקטגוריות' : 'כניסה למרחב'} ←</span>
+        </button>`).join('')}
+    </div>`;
+
+  bindBody();
+  app.querySelectorAll('.hub-card').forEach(b=>{
+    b.addEventListener('click', ()=>openCard(cardById(b.dataset.card)));
+  });
+  loadManifest().then(()=>updateHubCounts());
+}
+
+/* body figure interactions */
+function bindBody(){
+  const stage = document.getElementById('bodyStage');
+  const tip   = document.getElementById('bodyTip');
+  if (!stage) return;
+  const svg  = stage.querySelector('.body-svg');
+  const hots = [...stage.querySelectorAll('.hot')];
+  let pinned = null;
+
+  const paint = (g)=>{
+    const p = BODY_POINTS[+g.dataset.i];
+    svg.classList.add('dim');
+    stage.querySelectorAll('.organ-g').forEach(o=>o.classList.remove('lit'));
+    const org = document.getElementById('g-'+p.organ);
+    if (org) org.classList.add('lit');
+    hots.forEach(h=>h.classList.toggle('on', h===g));
+
+    tip.innerHTML = `<strong><span aria-hidden="true">${p.icon}</span>${esc(p.title)}</strong>${esc(p.text)}`;
+    tip.classList.add('show');
+    const sr = stage.getBoundingClientRect(), gr = g.querySelector('.dot').getBoundingClientRect();
+    let x = gr.left - sr.left + gr.width/2 - tip.offsetWidth/2;
+    let y = gr.top  - sr.top  - tip.offsetHeight - 14;
+    x = Math.max(6, Math.min(x, sr.width - tip.offsetWidth - 6));
+    if (y < 0) y = gr.top - sr.top + gr.height + 14;
+    tip.style.left = x+'px'; tip.style.top = y+'px';
+  };
+  const clear = ()=>{
+    svg.classList.remove('dim');
+    stage.querySelectorAll('.organ-g').forEach(o=>o.classList.remove('lit'));
+    hots.forEach(h=>h.classList.remove('on'));
+    tip.classList.remove('show');
+  };
+
+  hots.forEach(g=>{
+    g.addEventListener('mouseenter', ()=>{ if(!pinned) paint(g); });
+    g.addEventListener('mouseleave', ()=>{ if(!pinned) clear(); });
+    g.addEventListener('focus',      ()=>{ if(!pinned) paint(g); });
+    g.addEventListener('blur',       ()=>{ if(!pinned) clear(); });
+    g.addEventListener('click', e=>{
+      e.stopPropagation();
+      if (pinned === g){ pinned = null; clear(); }
+      else { pinned = g; paint(g); }
+    });
+    g.addEventListener('keydown', e=>{
+      if (e.key==='Enter' || e.key===' '){ e.preventDefault(); g.click(); }
+    });
+  });
+  stage.addEventListener('click', e=>{
+    if (!e.target.closest('.hot')){ pinned = null; clear(); }
+  });
+  stage.addEventListener('mouseleave', ()=>{ if(!pinned) clear(); });
+}
+
+/* ===================================================================
+   Modal
+   =================================================================== */
+const backdrop = document.getElementById('backdrop');
+const modalBody= document.getElementById('modalBody');
+const modalHead= document.getElementById('modalHead');
+const hiddenFile = document.getElementById('hiddenFile');
+let currentSpace = null;
+
+function updateHubCounts(){
+  HUB.forEach(c=>{
+    const el = document.querySelector(`[data-count="${c.id}"]`);
+    if (!el) return;
+    if (c.subs){
+      const n = c.subs.reduce((s,x)=>s+spaceCount(c.id+':'+x.id),0);
+      el.textContent = `${c.subs.length} תחומים${n?' · '+n+' קבצים':''}`;
+    } else {
+      const n = spaceCount(c.id);
+      el.textContent = n ? `${n} קבצים` : 'מרחב פתוח';
+    }
+  });
+}
+
+function setModalHead(card, sub){
+  document.getElementById('modalIcon').textContent = sub ? sub.icon : card.icon;
+  document.getElementById('modalTitle').textContent = sub ? sub.title : card.title;
+  document.getElementById('modalSub').textContent = sub ? card.title : (card.desc||'');
+  modalHead.setAttribute('style', toneStyle(card.tone));
+  document.getElementById('modal').setAttribute('style', toneStyle(card.tone));
+}
+
+function openCard(card){
+  backdrop.hidden = false;
+  requestAnimationFrame(()=>backdrop.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+  setModalHead(card);
+  if (card.subs) showSubs(card); else showSpace(card, null);
+  document.getElementById('modalClose').focus();
+}
+
+function showSubs(card){
+  currentSpace = null;
+  modalBody.innerHTML = `
+    <div class="panel">
+      <div class="ws-head">
+        <h3>תת-הקטגוריות של ${esc(card.title)}</h3>
+        <p>בחרו תחום כדי להיכנס למרחב הייעודי שלו.</p>
+      </div>
+      <div class="sub-grid">
+        ${card.subs.map(s=>`
+          <button class="sub-card" type="button" style="${toneStyle(card.tone)}" data-sub="${s.id}">
+            ${s.badge ? `<span class="badge-link">${esc(s.badge)}</span>` : ''}
+            <span class="sub-emoji" aria-hidden="true">${s.icon}</span>
+            <h4>${esc(s.title)}</h4>
+            <p>${esc(s.desc)}</p>
+            <span class="go-mini">${s.link ? 'למפת הדרכים השנתית ←' : 'כניסה למרחב ←'}</span>
+          </button>`).join('')}
+      </div>
+    </div>`;
+  modalBody.querySelectorAll('.sub-card').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const sub = card.subs.find(s=>s.id===b.dataset.sub);
+      if (sub.link){ closeModal(); location.hash = sub.link; }
+      else showSpace(card, sub);
+    });
+  });
+}
+
+function closeModal(){
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+  currentSpace = null;
+  setTimeout(()=>{ backdrop.hidden = true; modalBody.innerHTML = ''; }, 260);
+  updateHubCounts();
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+backdrop.addEventListener('mousedown', e=>{ if (e.target === backdrop) closeModal(); });
+document.addEventListener('keydown', e=>{ if (e.key === 'Escape' && !backdrop.hidden) closeModal(); });
+
+/* ---------- router ---------- */
+function route(){
+  const h = location.hash.replace(/^#/,'') || '/';
+  let m;
+  if ((m = h.match(/^\/program\/([ab])\/month\/(\d+)\/lesson\/(\d+)$/))){
+    const p = PROGRAMS[m[1]], mi = +m[2]-1, li = +m[3]-1;
+    if (p && p.months[mi] && p.months[mi].lessons[li]) { renderLesson(p, mi, li); }
+    else renderHub();
+  } else if ((m = h.match(/^\/program\/([ab])\/month\/(\d+)$/))){
+    const p = PROGRAMS[m[1]], mi = +m[2]-1;
+    if (p && p.months[mi]) renderMonth(p, mi); else renderHub();
+  } else if ((m = h.match(/^\/program\/([ab])$/))){
+    renderProgram(PROGRAMS[m[1]]);
+  } else if (h === '/programs'){
+    renderHome();
+  } else {
+    renderHub();
+  }
+  if (!backdrop.hidden) closeModal();
+  window.scrollTo({top:0});
+}
+/* ---------- viewer + gate wiring ---------- */
+document.getElementById('viewerClose').addEventListener('click', closeViewer);
+document.getElementById('viewer').addEventListener('mousedown', e=>{
+  if (e.target.id === 'viewer' || e.target.classList.contains('v-body')) closeViewer();
+});
+document.getElementById('gSave').addEventListener('click', gateSave);
+document.getElementById('gCancel').addEventListener('click', closeGate);
+document.getElementById('gLogout').addEventListener('click', gateLogout);
+document.getElementById('gate').addEventListener('mousedown', e=>{ if (e.target.id==='gate') closeGate(); });
+document.getElementById('gToken').addEventListener('keydown', e=>{ if(e.key==='Enter') gateSave(); });
+document.addEventListener('keydown', e=>{
+  if (e.key !== 'Escape') return;
+  if (!document.getElementById('viewer').hidden){ closeViewer(); return; }
+  if (!document.getElementById('gate').hidden){ closeGate(); return; }
+});
+
+window.addEventListener('hashchange', route);
+route();
+loadManifest().then(updateHubCounts);
+</script>
+</body>
+</html>
