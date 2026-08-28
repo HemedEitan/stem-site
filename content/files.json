@@ -1,14 +1,6 @@
 {
-  "updated": "2026-08-28T12:17:42.277Z",
+  "updated": "2026-08-28T12:20:56.122Z",
   "spaces": {
-    "games": [
-      {
-        "kind": "youtube",
-        "name": "חרם זה לא משחק ילדים",
-        "videoId": "lTx_f7yTEoA",
-        "url": "https://www.youtube.com/watch?v=lTx_f7yTEoA",
-        "at": 1787919461870
-      }
-    ]
+    "games": []
   }
 }
