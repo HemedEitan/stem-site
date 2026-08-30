@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-30T12:10:47.247Z",
+  "updated": "2026-08-30T12:11:08.991Z",
   "spaces": {
     "games": [
       {
@@ -17,6 +17,15 @@
         "videoId": "yZ89TGox4pA",
         "url": "https://www.youtube.com/watch?v=yZ89TGox4pA",
         "at": 1787920044410
+      }
+    ],
+    "science": [
+      {
+        "name": "watermarked_preview.mp4",
+        "path": "content/files/science/1788091867038-i54we.mp4",
+        "type": "video/mp4",
+        "size": 163422,
+        "at": 1788091868598
       }
     ]
   }
