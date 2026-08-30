@@ -2510,7 +2510,9 @@ function setModalHead(card, sub){
   document.getElementById('modal').setAttribute('style', toneStyle(card.tone));
 }
 
+let modalCleanupT = null;
 function openCard(card){
+  clearTimeout(modalCleanupT);          /* cancel a pending close-cleanup */
   backdrop.hidden = false;
   requestAnimationFrame(()=>backdrop.classList.add('open'));
   document.body.style.overflow = 'hidden';
@@ -2551,7 +2553,8 @@ function closeModal(){
   backdrop.classList.remove('open');
   document.body.style.overflow = '';
   currentSpace = null;
-  setTimeout(()=>{ backdrop.hidden = true; modalBody.innerHTML = ''; }, 260);
+  clearTimeout(modalCleanupT);
+  modalCleanupT = setTimeout(()=>{ backdrop.hidden = true; modalBody.innerHTML = ''; }, 260);
   updateHubCounts();
 }
 document.getElementById('modalClose').addEventListener('click', closeModal);
